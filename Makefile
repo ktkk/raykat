@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -g -std=c11
 LD=$(CC)
-LDFLAGS=
+LDFLAGS=-lm
 DEPFLAGS=-MMD -MP
 
 CONVERT=pnmtopng
