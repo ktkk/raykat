@@ -4,6 +4,8 @@ LD=$(CC)
 LDFLAGS=
 DEPFLAGS=-MMD -MP
 
+CONVERT=pnmtopng
+
 SRC=src
 SRCS=$(wildcard $(SRC)/*.c)
 BUILD_DIR=build
@@ -11,7 +13,7 @@ OBJS=$(patsubst $(SRC)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 DEPS=$(patsubst $(SRC)/%.c,$(BUILD_DIR)/%.d,$(SRCS))
 
 BIN=raykat
-IMAGE=image.ppm
+IMAGE=image
 
 all: $(BUILD_DIR)/$(BIN)
 
@@ -33,4 +35,5 @@ run: $(BUILD_DIR)/$(BIN)
 	@$<
 
 image: $(BUILD_DIR)/$(BIN)
-	$< > $(IMAGE)
+	$< > $(IMAGE).ppm
+	$(CONVERT) $(IMAGE).ppm > $(IMAGE).png
