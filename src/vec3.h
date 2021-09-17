@@ -17,6 +17,7 @@ typedef	union {
 vec3 vec3_invert(vec3* v);
 
 vec3 vec3_add(vec3* v0, vec3* v1);
+vec3 vec3_sub(vec3* v0, vec3* v1);
 vec3 vec3_multiply_vectors(vec3* v0, vec3* v1);
 vec3 vec3_multiply_double(vec3* v, double t);
 vec3 vec3_divide(vec3* v, double t);

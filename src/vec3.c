@@ -11,6 +11,11 @@ vec3 vec3_add(vec3* v0, vec3* v1) {
 	return sum;
 }
 
+vec3 vec3_sub(vec3* v0, vec3* v1) {
+	vec3 sub = {{ v0->v[0] - v1->v[0], v0->v[1] - v1->v[1], v0->v[2] - v1->v[2] }};
+	return sub;
+}
+
 vec3 vec3_multiply_vectors(vec3* v0, vec3* v1) {
 	vec3 prod = {{ v0->v[0] * v1->v[0], v0->v[1] * v1->v[1], v0->v[2] * v1->v[2] }};
 	return prod;
