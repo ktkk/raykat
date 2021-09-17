@@ -20,7 +20,7 @@ int main() {
 			pixel_color.y = (double)i / (IMG_HEIGHT - 1);
 			pixel_color.z = 0.25;
 
-			write_color(stdout, pixel_color);
+			write_color(stdout, &pixel_color);
 		}
 	}
 

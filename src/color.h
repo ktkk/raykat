@@ -7,6 +7,6 @@
 
 #define CONVERT_COMPONENT(name) (int)(255.999 * name)
 
-void write_color(FILE* stream, color3 color);
+void write_color(FILE* stream, color3* color);
 
 #endif //COLOR_H
