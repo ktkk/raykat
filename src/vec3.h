@@ -11,6 +11,11 @@ typedef	union {
 		double y;
 		double z;
 	};
+	struct {
+		double r;
+		double g;
+		double b;
+	}
 } vec3;
 
 /* vec3 operations */
