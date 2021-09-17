@@ -15,7 +15,7 @@ typedef	union {
 		double r;
 		double g;
 		double b;
-	}
+	};
 } vec3;
 
 /* vec3 operations */
