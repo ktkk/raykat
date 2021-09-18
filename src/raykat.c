@@ -21,6 +21,7 @@ color3 bg_color(ray* r) {
 	color3 temp1 = {{ 0.5, 0.7, 1.0 }};
 	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - t);
 	color3 prod1 = vec3_multiply_double(&temp1, t);
+	/* blendedValue = (1 - t) * startValue + t * endValue */
 	return vec3_add(&prod0, &prod1);
 }
 
