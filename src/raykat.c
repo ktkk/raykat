@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 #include "vec3.h"
 #include "color.h"
@@ -13,29 +14,41 @@
 #define VIEW_WIDTH ASPECT_RATIO * VIEW_HEIGHT
 #define FOCAL_LENGTH 1.0
 
-bool hit_sphere(point3* center, double radius, ray* r) {
+double hit_sphere(point3* center, double radius, ray* r) {
 	vec3 oc = vec3_sub(&r->origin, center);
-	double a = vec3_dotprod(&r->direction, &r->direction);
-	double b = 2.0 * vec3_dotprod(&oc, &r->direction);
-	double c = vec3_dotprod(&oc, &oc) - radius * radius;
-	double discriminant = b * b - 4 * a * c;
-	return discriminant > 0;
+	double a = vec3_length_squared(&r->direction);
+	double half_b = vec3_dotprod(&oc, &r->direction);
+	double c = vec3_length_squared(&oc) - radius * radius;
+	double discriminant = half_b * half_b - a * c;
+
+	if (discriminant < 0)
+		return -1.0;
+	else
+		return (-half_b - sqrt(discriminant)) / a;
 }
 
 /* Test function that produces a gradient value for a given ray */
 color3 ray_color(ray* r) {
-	point3 sphere = {{ 0, 0, -1 }};
-	color3 red = {{ 1, 0, 0 }};
-	if (hit_sphere(&sphere, 0.5, r))
-		return red;
+	point3 sphere_center = {{ 0, 0, -1 }};
+	double sphere_radius = 0.5;
+	double hit = hit_sphere(&sphere_center, sphere_radius, r);
+	if (hit > 0.0) {
+		point3 temp0 = ray_at(r, hit);
+		point3 temp1 = {{ 0, 0, -1 }};
+		point3 temp2 = vec3_sub(&temp0, &temp1);
+		vec3 n = vec3_norm(&temp2);
+
+		color3 temp3 = {{ 0.5 * (n.x + 1), 0.5 * (n.y + 1), 0.5 * (n.z + 1) }};
+		return temp3;
+	}
 
 	vec3 unit_direction = vec3_norm(&r->direction);
-	double t = 0.5 * (unit_direction.y + 1.0);
+	hit = 0.5 * (unit_direction.y + 1.0);
 
 	color3 temp0 = {{ 1.0, 1.0, 1.0 }};
 	color3 temp1 = {{ 0.5, 0.7, 1.0 }};
-	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - t);
-	color3 prod1 = vec3_multiply_double(&temp1, t);
+	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
+	color3 prod1 = vec3_multiply_double(&temp1, hit);
 	/* blendedValue = (1 - t) * startValue + t * endValue */
 	return vec3_add(&prod0, &prod1);
 }
