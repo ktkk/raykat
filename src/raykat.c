@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "vec3.h"
 #include "color.h"
@@ -12,8 +13,22 @@
 #define VIEW_WIDTH ASPECT_RATIO * VIEW_HEIGHT
 #define FOCAL_LENGTH 1.0
 
+bool hit_sphere(point3* center, double radius, ray* r) {
+	vec3 oc = vec3_sub(&r->origin, center);
+	double a = vec3_dotprod(&r->direction, &r->direction);
+	double b = 2.0 * vec3_dotprod(&oc, &r->direction);
+	double c = vec3_dotprod(&oc, &oc) - radius * radius;
+	double discriminant = b * b - 4 * a * c;
+	return discriminant > 0;
+}
+
 /* Test function that produces a gradient value for a given ray */
-color3 bg_color(ray* r) {
+color3 ray_color(ray* r) {
+	point3 sphere = {{ 0, 0, -1 }};
+	color3 red = {{ 1, 0, 0 }};
+	if (hit_sphere(&sphere, 0.5, r))
+		return red;
+
 	vec3 unit_direction = vec3_norm(&r->direction);
 	double t = 0.5 * (unit_direction.y + 1.0);
 
@@ -57,7 +72,7 @@ int main() {
 			point3 direction = vec3_sub(&temp1, &origin);
 
 			ray r = { origin, direction };
-			color3 pixel_color = bg_color(&r);
+			color3 pixel_color = ray_color(&r);
 
 			write_color(stdout, &pixel_color);
 		}
