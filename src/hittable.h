@@ -13,10 +13,10 @@ typedef struct {
 	bool front_face;
 } hit_record;
 
-void hittable_set_face_normal(hit_record* rec, ray* r, vec3* outward_normal) {
-	rec->front_face = vec3_dotprod(&r->direction, outward_normal);
-	vec3 inverse_outward_normal = vec3_invert(outward_normal);
-	rec->normal = rec->front_face ? *outward_normal : inverse_outward_normal;
-}
+typedef struct {
+	// TODO(): Figure out virtual function "hit", possibly with function pointers
+} hittable;
+
+void hittable_set_face_normal(hit_record* rec, ray* r, vec3* outward_normal);
 
 #endif //HITTABLE_H
