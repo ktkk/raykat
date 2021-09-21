@@ -11,11 +11,11 @@ sphere sphere_init(point3* center, double radius) {
 }
 
 hittable* sphere_new(point3* center, double radius) {
-	sphere* sphere = calloc(1, sizeof(sphere));
-	if (sphere == NULL) fprintf(stderr, "Calloc failed: %p", sphere);
+	sphere* psphere = calloc(1, sizeof(sphere));
+	if (psphere == NULL) fprintf(stderr, "Calloc failed: %p", psphere);
 
-	*sphere = sphere_init(center, radius);
-	return (hittable*)sphere;
+	*psphere = sphere_init(center, radius);
+	return (hittable*)psphere;
 }
 
 static bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec) {
