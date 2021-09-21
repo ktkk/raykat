@@ -13,10 +13,10 @@ typedef struct {
 	bool front_face;
 } hit_record;
 
-typedef struct {
-	// TODO(): Figure out virtual function "hit", possibly with function pointers
-} hittable;
+typedef struct hittable_s hittable;
 
-void hittable_set_face_normal(hit_record* rec, ray* r, vec3* outward_normal);
+bool hittable_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
+
+void hit_record_set_face_normal(hit_record* rec, ray* r, vec3* outward_normal);
 
 #endif //HITTABLE_H

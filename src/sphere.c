@@ -22,7 +22,7 @@ bool sphere_hit(sphere* s, ray* r, double t_min, double t_max, hit_record* rec) 
 	rec->p = ray_at(r, rec->t);
 	point3 temp0 = vec3_sub(&rec->p, &s->center);
 	vec3 outward_normal = vec3_divide(&temp0, s->radius);
-	hittable_set_face_normal(rec, r, &outward_normal);
+	hit_record_set_face_normal(rec, r, &outward_normal);
 
 	return true;
 }
