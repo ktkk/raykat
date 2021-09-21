@@ -6,10 +6,11 @@ hittable_list hittable_list_init(int capacity) {
 	hittable_list* list = calloc(1, sizeof(hittable_list));
 	if (list == NULL) fprintf(stderr, "Calloc failed: %p", list);
 
+	list->objects.data = calloc(capacity, sizeof(hittable*));
+	if (list->objects.data == NULL) fprintf(stderr, "Calloc failed: %p", list->objects.data);
+
 	list->objects.capacity = capacity;
 	list->objects.size = 0;
-	list->objects.data = calloc(list->objects.capacity, sizeof(hittable*));
-	if (list->objects.data == NULL) fprintf(stderr, "Calloc failed: %p", list->objects.data);
 
 	return *list;
 }
