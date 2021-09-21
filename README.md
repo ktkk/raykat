@@ -17,4 +17,5 @@ make image
 
 ## References
 [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html) by Peter Shirley
+
 [_raytracing-weekend_](https://github.com/Morozov-5F/raytracing-weekend) by Morozov-5F
