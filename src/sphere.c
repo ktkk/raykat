@@ -3,6 +3,8 @@
 #include <math.h>
 #include "sphere.h"
 
+static bool sphere_hit_test(point3* center, double radius, ray* r, double t_min, double t_max, hit_record* rec);
+
 sphere sphere_init(point3* center, double radius) {
 	sphere sphere = { .center = *center, .radius = radius };
 	hittable_init(&sphere.base, HITTABLE_TYPE_SPHERE, sphere_hit);
@@ -18,7 +20,7 @@ hittable* sphere_new(point3* center, double radius) {
 	return (hittable*)psphere;
 }
 
-static bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec) {
+bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec) {
 	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p", hittable);
 	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d", hittable->type);
 

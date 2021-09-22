@@ -17,8 +17,6 @@ typedef struct {
 
 sphere sphere_init(point3* center, double radius);
 hittable* sphere_new(point3* center, double radius);
-static bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
-
-bool sphere_hit_test(point3* center, double radius, ray* r, double t_min, double t_max, hit_record* rec);
+bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
 
 #endif //SPHERE_H
