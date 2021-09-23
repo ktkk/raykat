@@ -1,14 +1,11 @@
+#include <math.h>
 #include "color.h"
 
 void write_color(FILE* stream, color3* color, int samples_per_pixel) {
-	double r = color->r;
-	double g = color->g;
-	double b = color->b;
-
 	double scale = 1.0 / samples_per_pixel;
-	r *= scale;
-	g *= scale;
-	b *= scale;
+	double r = sqrt(scale * color->r);
+	double g = sqrt(scale * color->g);
+	double b = sqrt(scale * color->b);
 
 	/* Write out the translated [0, 255] value of each color component */
 	fprintf(stream, "%d %d %d\n",
