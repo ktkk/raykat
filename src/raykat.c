@@ -5,14 +5,12 @@
 #include "color.h"
 #include "hittable_list.h"
 #include "sphere.h"
+#include "camera.h"
 
 #define ASPECT_RATIO (16.0/9.0)
 #define IMG_WIDTH 400
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
-
-#define VIEW_HEIGHT 2.0
-#define VIEW_WIDTH ASPECT_RATIO * VIEW_HEIGHT
-#define FOCAL_LENGTH 1.0
+#define SAMPLES_PER_PIXEL 100
 
 /* Test function that produces a gradient value for a given ray */
 color3 ray_color(ray* r, hittable_list* world) {
@@ -43,16 +41,7 @@ int main() {
 	hittable_list_add(&world, sphere_new(&center1, 100));
 
 	/* CAMERA */
-	point3 origin = {{ 0, 0, 0 }};
-	vec3 horizontal = {{ VIEW_WIDTH, 0, 0 }};
-	vec3 vertical = {{ 0, VIEW_HEIGHT, 0 }};
-
-	point3 half_hor = vec3_divide(&horizontal, 2);
-	point3 half_vert = vec3_divide(&vertical, 2);
-	point3 temp0 = vec3_sub(&origin, &half_hor);
-	point3 temp1 = vec3_sub(&temp0, &half_vert);
-	point3 temp2 = {{ 0, 0, FOCAL_LENGTH }};
-	point3 lower_left_corner = vec3_sub(&temp1, &temp2);
+	camera cam = camera_init();
 
 	/* RENDER */
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
@@ -63,19 +52,18 @@ int main() {
 		fflush(stderr);
 
 		for (int j = 0; j < IMG_WIDTH; ++j) {
-			double u = (double)j / (IMG_WIDTH - 1);
-			double v = (double)i / (IMG_HEIGHT - 1);
+			color3 pixel_color = {{ 0, 0, 0 }};
 
-			point3 h_pos = vec3_multiply_double(&horizontal, u);
-			point3 v_pos = vec3_multiply_double(&vertical, v);
-			temp0 = vec3_add(&lower_left_corner, &h_pos);
-			temp1 = vec3_add(&temp0, &v_pos);
-			point3 direction = vec3_sub(&temp1, &origin);
+			for (int s = 0; s < SAMPLES_PER_PIXEL; ++s) {
+				double u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
+				double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
 
-			ray r = { origin, direction };
-			color3 pixel_color = ray_color(&r, &world);
+				ray r = camera_get_ray(&cam, u, v);
+				color3 temp0 = ray_color(&r, &world);
+				pixel_color = vec3_add(&pixel_color, &temp0);
+			}
 
-			write_color(stdout, &pixel_color);
+			write_color(stdout, &pixel_color, SAMPLES_PER_PIXEL);
 		}
 	}
 
