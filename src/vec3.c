@@ -1,4 +1,5 @@
 #include <math.h>
+#include "raykat.h"
 #include "vec3.h"
 
 vec3 vec3_invert(vec3* v) {
@@ -56,4 +57,24 @@ double vec3_length(vec3* v) {
 
 vec3 vec3_norm(vec3* v) {
 	return vec3_divide(v, vec3_length(v));
+}
+
+vec3 vec3_random() {
+	vec3 temp = {{ RAND_DOUBLE, RAND_DOUBLE, RAND_DOUBLE }};
+	return temp;
+}
+
+vec3 vec3_random_range(double min, double max) {
+	vec3 temp = {{ RAND_DOUBLE_RANGE(min, max), RAND_DOUBLE_RANGE(min, max), RAND_DOUBLE_RANGE(min, max) }};
+	return temp;
+}
+
+vec3 vec3_random_in_unit_sphere() {
+	while (1) {
+		vec3 p = vec3_random_range(-1, 1);
+
+		if (vec3_length_squared(&p) >= 1) continue;
+
+		return p;
+	}
 }
