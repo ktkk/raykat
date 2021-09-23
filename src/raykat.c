@@ -57,7 +57,7 @@ int main() {
 							      P3 means colors are in ascii
 							      followed by width and height */
 	for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
-		fprintf(stderr, "\rScanlines remaining: %d", i);
+		fprintf(stderr, "\rScanlines remaining: %03d", i);
 		fflush(stderr);
 
 		for (int j = 0; j < IMG_WIDTH; ++j) {
