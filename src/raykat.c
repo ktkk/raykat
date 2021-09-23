@@ -11,14 +11,23 @@
 #define IMG_WIDTH 400
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
 #define SAMPLES_PER_PIXEL 100
+#define MAX_DEPTH 50
 
 /* Test function that produces a gradient value for a given ray */
-color3 ray_color(ray* r, hittable_list* world) {
+color3 ray_color(ray* r, hittable_list* world, int depth) {
 	hit_record rec;
+
+	color3 black = {{ 0, 0, 0 }};
+	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
+
 	if (hittable_list_hit(world, r, 0, INFINITY, &rec)) {
-		color3 temp0 = {{ 1, 1, 1 }};
-		vec3 temp1 = vec3_add(&rec.normal, &temp0);
-		return vec3_multiply_double(&temp1, 0.5);
+		vec3 temp0 = vec3_add(&rec.p, &rec.normal);
+		vec3 temp1 = vec3_random_in_unit_sphere();
+		point3 target = vec3_add(&temp0, &temp1);
+
+		ray temp2 = { rec.p, vec3_sub(&target, &rec.p) };
+		color3 temp3 = ray_color(&temp2, world, depth - 1);
+		return vec3_multiply_double(&temp3, 0.5);
 	}
 
 	vec3 unit_direction = vec3_norm(&r->direction);
@@ -59,8 +68,8 @@ int main() {
 				double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
 
 				ray r = camera_get_ray(&cam, u, v);
-				color3 temp0 = ray_color(&r, &world);
-				pixel_color = vec3_add(&pixel_color, &temp0);
+				color3 raycolor = ray_color(&r, &world, MAX_DEPTH);
+				pixel_color = vec3_add(&pixel_color, &raycolor);
 			}
 
 			write_color(stdout, &pixel_color, SAMPLES_PER_PIXEL);
