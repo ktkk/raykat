@@ -4,6 +4,7 @@
 /* STD */
 #include <stdbool.h>
 #include <math.h>
+#include <stdlib.h>
 
 /* CONSTANTS */
 #ifdef M_PI
@@ -15,6 +16,8 @@
 
 /* UTILITY FUNCTIONS AND MACROS*/
 #define DEG_TO_RAD(deg) (((deg) * PI) / 180.0)
+#define RAND_DOUBLE (rand() / (RAND_MAX + 1.0))
+#define RAND_DOUBLE_RANGE(min, max) ((max - min) * RAND_DOUBLE + min)
 
 /* HEADERS */
 #include "vec3.h"
