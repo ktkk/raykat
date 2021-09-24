@@ -20,7 +20,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 	color3 black = {{ 0, 0, 0 }};
 	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
 
-	if (hittable_list_hit(world, r, 0, INFINITY, &rec)) {
+	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
 		vec3 temp0 = vec3_add(&rec.p, &rec.normal);
 		vec3 temp1 = vec3_random_in_unit_sphere();
 		point3 target = vec3_add(&temp0, &temp1);
