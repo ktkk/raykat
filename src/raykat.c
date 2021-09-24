@@ -51,7 +51,7 @@ int main() {
 	hittable_list_add(&world, sphere_new(&center1, 100));
 
 	/* CAMERA */
-	camera cam = camera_init();
+	camera cam = camera_init(90.0, ASPECT_RATIO);
 
 	/* RENDER */
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
