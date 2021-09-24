@@ -78,3 +78,16 @@ vec3 vec3_random_in_unit_sphere() {
 		return p;
 	}
 }
+
+vec3 vec3_random_unit_vector() {
+	vec3 rand = vec3_random_in_unit_sphere();
+	return vec3_norm(&rand);
+}
+
+vec3 vec3_random_in_hemisphere(vec3* normal) {
+	vec3 in_unit_sphere = vec3_random_in_unit_sphere();
+	if (vec3_dotprod(&in_unit_sphere, normal) > 0.0)
+		return in_unit_sphere;
+	else
+		return vec3_invert(&in_unit_sphere);
+}

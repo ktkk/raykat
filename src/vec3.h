@@ -33,9 +33,12 @@ double vec3_length_squared(vec3* v);
 double vec3_length(vec3* v);
 vec3 vec3_norm(vec3* v);
 
+/* vec3 random generators */
 vec3 vec3_random();
 vec3 vec3_random_range(double min, double max);
 vec3 vec3_random_in_unit_sphere();
+vec3 vec3_random_unit_vector();
+vec3 vec3_random_in_hemisphere(vec3* normal);
 
 /* Typedef point and color as alias to vec3 */
 typedef vec3 point3;

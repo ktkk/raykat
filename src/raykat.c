@@ -22,7 +22,8 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
 		vec3 temp0 = vec3_add(&rec.p, &rec.normal);
-		vec3 temp1 = vec3_random_in_unit_sphere();
+		vec3 temp1 = vec3_random_unit_vector();
+		//vec3 temp1 = vec3_random_in_hemisphere(&rec.normal);
 		point3 target = vec3_add(&temp0, &temp1);
 
 		ray temp2 = { rec.p, vec3_sub(&target, &rec.p) };
