@@ -2,7 +2,9 @@
 Simple raytracing engine in C (WIP).
 Based on _Ray Tracing in One Weekend_ by Peter Shirley.
 
-Watch [image.png](https://raw.githubusercontent.com/ktkk/raykat/master/image.png) for a rough estimate of where I am through the course.
+Watch [image.png](/image.png) for a rough estimate of where I am through the course.
+
+![Progress image](/image.png)
 
 ## Build
 Build with make:
