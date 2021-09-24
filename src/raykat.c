@@ -47,11 +47,18 @@ int main() {
 	hittable_list world = hittable_list_init(2);
 	point3 center0 = {{ 0, 0, -1 }};
 	point3 center1 = {{ 0, -100.5, -1 }};
+	point3 center2 = {{ -2, 0, -1 }};
+	point3 center3 = {{ 2, 0, -1 }};
 	hittable_list_add(&world, sphere_new(&center0, 0.5));
 	hittable_list_add(&world, sphere_new(&center1, 100));
+	hittable_list_add(&world, sphere_new(&center2, 0.5));
+	hittable_list_add(&world, sphere_new(&center3, 0.5));
 
 	/* CAMERA */
-	camera cam = camera_init(90.0, ASPECT_RATIO);
+	point3 lookfrom = {{ -1, 0, 10 }};
+	point3 lookat = {{ 0, 0, -1 }};
+	vec3 vup = {{ 0, 1, 0 }};
+	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO);
 
 	/* RENDER */
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
