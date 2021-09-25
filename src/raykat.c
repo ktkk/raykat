@@ -20,7 +20,6 @@
 #define GREEN "\e[0;32m"
 #define RESETCOL "\e[0m"
 
-/* Test function that produces a gradient value for a given ray */
 color3 ray_color(ray* r, hittable_list* world, int depth) {
 	hit_record rec;
 
