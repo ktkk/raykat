@@ -17,7 +17,17 @@ To generate the image, run the make rule "image":
 make image
 ```
 
-## References
-[_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html) by Peter Shirley
+## Todo
+I Completed the first book except for the materials. Here is what I'm planning to to next (eventually):
+- [ ] Fix the coordinate system: The book uses y-up, which is not what I'm used to so I intend on changing it to z-up.
+- [ ] Materials: I intentionally skipped this because translating the course's polymorphism was a pain for the hittables.
+- [ ] Command line arguments: Reading resolution and other settings from argv.
+- [ ] Read geometry from file.
+- [ ] Environment maps.
+- [ ] Threading: I have no experience with pthread.h so this aught to be fun.
+- [ ] Textures.
+- [ ] Volumes.
 
-[_raytracing-weekend_](https://github.com/Morozov-5F/raytracing-weekend) by Morozov-5F
+## References
+- [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html) by Peter Shirley
+- [_raytracing-weekend_](https://github.com/Morozov-5F/raytracing-weekend) by Morozov-5F
