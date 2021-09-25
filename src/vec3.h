@@ -39,6 +39,7 @@ vec3 vec3_random_range(double min, double max);
 vec3 vec3_random_in_unit_sphere();
 vec3 vec3_random_unit_vector();
 vec3 vec3_random_in_hemisphere(vec3* normal);
+vec3 vec3_random_in_unit_disk();
 
 /* Typedef point and color as alias to vec3 */
 typedef vec3 point3;

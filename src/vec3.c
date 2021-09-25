@@ -91,3 +91,13 @@ vec3 vec3_random_in_hemisphere(vec3* normal) {
 	else
 		return vec3_invert(&in_unit_sphere);
 }
+
+vec3 vec3_random_in_unit_disk() {
+	while (1) {
+		vec3 p = {{ RAND_DOUBLE_RANGE(-1, 1), RAND_DOUBLE_RANGE(-1, 1), 0 }};
+
+		if (vec3_length_squared(&p) >= 1) continue;
+
+		return p;
+	}
+}
