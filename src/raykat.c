@@ -55,10 +55,14 @@ int main() {
 	hittable_list_add(&world, sphere_new(&center3, 0.5));
 
 	/* CAMERA */
-	point3 lookfrom = {{ -1, 0, 10 }};
+	point3 lookfrom = {{ 3.5, 1, 3 }};
 	point3 lookat = {{ 0, 0, -1 }};
 	vec3 vup = {{ 0, 1, 0 }};
-	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO);
+	double aperture = 1.0;
+	vec3 temp0 = vec3_sub(&lookfrom, &lookat);
+	double dist_to_focus = vec3_length(&temp0);
+	//double dist_to_focus = 7.0;
+	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* RENDER */
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
