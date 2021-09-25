@@ -1,6 +1,7 @@
 #include "raykat.h"
 
 #include <stdio.h>
+#include <time.h>
 
 #include "color.h"
 #include "hittable_list.h"
@@ -12,6 +13,12 @@
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
 #define SAMPLES_PER_PIXEL 100
 #define MAX_DEPTH 50
+
+/* ANSI colored output */
+#define YELLOW "\e[0;33m"
+#define RED "\e[0;31m"
+#define GREEN "\e[0;32m"
+#define RESETCOL "\e[0m"
 
 /* Test function that produces a gradient value for a given ray */
 color3 ray_color(ray* r, hittable_list* world, int depth) {
@@ -65,11 +72,13 @@ int main() {
 	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* RENDER */
+	clock_t start = clock();
+
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
 							      P3 means colors are in ascii
 							      followed by width and height */
 	for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
-		fprintf(stderr, "\rScanlines remaining: %03d", i);
+		fprintf(stderr, YELLOW "\rScanlines remaining: " RED "%3d" RESETCOL, i);
 		fflush(stderr);
 
 		for (int j = 0; j < IMG_WIDTH; ++j) {
@@ -88,5 +97,8 @@ int main() {
 		}
 	}
 
-	fprintf(stderr, "\nDone.\n");
+	clock_t diff = clock() - start;
+	int msec = diff * 1000 / CLOCKS_PER_SEC;
+
+	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %d seconds and %d milliseconds.\n", msec / 1000, msec % 1000);
 }
