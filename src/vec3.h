@@ -19,26 +19,26 @@ typedef	union {
 } vec3;
 
 /* vec3 operations */
-vec3 vec3_invert(vec3* v);
+vec3 vec3_invert(const vec3* v);
 
-vec3 vec3_add(vec3* v0, vec3* v1);
-vec3 vec3_sub(vec3* v0, vec3* v1);
-vec3 vec3_multiply_vectors(vec3* v0, vec3* v1);
-vec3 vec3_multiply_double(vec3* v, double t);
-vec3 vec3_divide(vec3* v, double t);
+vec3 vec3_add(const vec3* v0, const vec3* v1);
+vec3 vec3_sub(const vec3* v0, const vec3* v1);
+vec3 vec3_multiply_vectors(const vec3* v0, const vec3* v1);
+vec3 vec3_multiply_double(const vec3* v, double t);
+vec3 vec3_divide(const vec3* v, double t);
 
-double vec3_dotprod(vec3* v0, vec3* v1);
-vec3 vec3_crossprod(vec3* v0, vec3* v1);
-double vec3_length_squared(vec3* v);
-double vec3_length(vec3* v);
-vec3 vec3_norm(vec3* v);
+double vec3_dotprod(const vec3* v0, const vec3* v1);
+vec3 vec3_crossprod(const vec3* v0, const vec3* v1);
+double vec3_length_squared(const vec3* v);
+double vec3_length(const vec3* v);
+vec3 vec3_norm(const vec3* v);
 
 /* vec3 random generators */
 vec3 vec3_random();
 vec3 vec3_random_range(double min, double max);
 vec3 vec3_random_in_unit_sphere();
 vec3 vec3_random_unit_vector();
-vec3 vec3_random_in_hemisphere(vec3* normal);
+vec3 vec3_random_in_hemisphere(const vec3* normal);
 vec3 vec3_random_in_unit_disk();
 
 /* Typedef point and color as alias to vec3 */
