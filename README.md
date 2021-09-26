@@ -25,7 +25,7 @@ I Completed the first book except for the materials. Here is what I'm planning t
 - [ ] Command line arguments: Reading resolution and other settings from argv.
 - [ ] Read geometry from file.
 - [ ] Environment maps.
-- [ ] Threading: I have no experience with pthread.h so this aught to be fun.
+- [ ] Threading: I have no experience with pthread.h so this ought to be fun.
 - [ ] Textures.
 - [ ] Volumes.
 
