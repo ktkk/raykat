@@ -19,7 +19,7 @@ make image
 
 ## Todo
 I Completed the first book except for the materials. Here is what I'm planning to to next (eventually):
-- [ ] Improve vector operations: Not sure if pass by pointer makes sense so I might remove that, which would lead to some major refactoring in the rest of the codebase.
+- [x] ~~Improve vector operations~~: Changed pointer params to const.
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
 - [ ] Materials: I intentionally skipped this because translating the course's polymorphism was a pain for the hittables.
 - [ ] Command line arguments: Reading resolution and other settings from argv.
