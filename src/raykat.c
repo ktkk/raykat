@@ -51,19 +51,19 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 int main() {
 	/* WORLD */
 	hittable_list world = hittable_list_init(2);
-	point3 center0 = {{ 0, 0, -1 }};
-	point3 center1 = {{ 0, -100.5, -1 }};
-	point3 center2 = {{ -2, 0, -1 }};
-	point3 center3 = {{ 2, 0, -1 }};
+	point3 center0 = {{ 0, -1, 0 }};
+	point3 center1 = {{ 0, -1, -100.5 }};
+	point3 center2 = {{ -2, -1, 0 }};
+	point3 center3 = {{ 2, -1, 0 }};
 	hittable_list_add(&world, sphere_new(&center0, 0.5));
 	hittable_list_add(&world, sphere_new(&center1, 100));
 	hittable_list_add(&world, sphere_new(&center2, 0.5));
 	hittable_list_add(&world, sphere_new(&center3, 0.5));
 
 	/* CAMERA */
-	point3 lookfrom = {{ 3.5, 1, 3 }};
-	point3 lookat = {{ 0, 0, -1 }};
-	vec3 vup = {{ 0, 1, 0 }};
+	point3 lookfrom = {{ 3.5, 3, 1 }};
+	point3 lookat = {{ 0, -1, 0 }};
+	vec3 vup = {{ 0, 0, 1 }};
 	double aperture = 1.0;
 	vec3 temp0 = vec3_sub(&lookfrom, &lookat);
 	double dist_to_focus = vec3_length(&temp0);
