@@ -26,6 +26,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 	color3 black = {{ 0, 0, 0 }};
 	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
 
+	/* If object is hit */
 	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
 		vec3 temp0 = vec3_add(&rec.p, &rec.normal);
 		vec3 temp1 = vec3_random_unit_vector();
@@ -37,6 +38,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 		return vec3_multiply_double(&temp3, 0.5);
 	}
 
+	/* Background lerp */
 	vec3 unit_direction = vec3_norm(&r->direction);
 	double hit = 0.5 * (unit_direction.y + 1.0);
 
@@ -44,7 +46,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 	color3 temp1 = {{ 0.5, 0.7, 1.0 }};
 	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
 	color3 prod1 = vec3_multiply_double(&temp1, hit);
-	/* blendedValue = (1 - t) * startValue + t * endValue */
+	/* blendedValue = (1 - hit) * startValue + hit * endValue */
 	return vec3_add(&prod0, &prod1);
 }
 
