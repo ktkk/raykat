@@ -7,7 +7,8 @@
 
 typedef enum {
 	HITTABLE_TYPE_UNKNOWN = -1,
-	HITTABLE_TYPE_SPHERE  = 0,
+	HITTABLE_TYPE_SPHERE = 0,
+	HITTABLE_TYPE_TRIANGLE,
 } hittable_type;
 
 typedef bool (*hittable_hit_fn)(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
