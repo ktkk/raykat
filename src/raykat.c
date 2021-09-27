@@ -10,7 +10,7 @@
 #include "camera.h"
 
 #define ASPECT_RATIO (16.0/9.0)
-#define IMG_WIDTH 400
+#define IMG_WIDTH 1080
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
 #define SAMPLES_PER_PIXEL 100
 #define MAX_DEPTH 50
