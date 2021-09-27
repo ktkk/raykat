@@ -6,10 +6,11 @@
 #include "color.h"
 #include "hittable_list.h"
 #include "sphere.h"
+#include "triangle.h"
 #include "camera.h"
 
 #define ASPECT_RATIO (16.0/9.0)
-#define IMG_WIDTH 1080
+#define IMG_WIDTH 400
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
 #define SAMPLES_PER_PIXEL 100
 #define MAX_DEPTH 50
@@ -53,6 +54,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 int main() {
 	/* WORLD */
 	hittable_list world = hittable_list_init(2);
+
 	point3 center0 = {{ 0, -1, 0 }};
 	point3 center1 = {{ 0, -1, -100.5 }};
 	point3 center2 = {{ -2, -1, 0 }};
@@ -62,11 +64,14 @@ int main() {
 	hittable_list_add(&world, sphere_new(&center2, 0.5));
 	hittable_list_add(&world, sphere_new(&center3, 0.5));
 
+	point3 p0 = {{ 0.5, -0.5, 0.3 }}, p1 = {{ 0, 0.2, 0.5 }}, p2 = {{ 0.7, 0.2, 0 }};
+	hittable_list_add(&world, triangle_new(&p0, &p1, &p2));
+
 	/* CAMERA */
 	point3 lookfrom = {{ 3.5, 3, 1 }};
 	point3 lookat = {{ 0, -1, 0 }};
 	vec3 vup = {{ 0, 0, 1 }};
-	double aperture = 1.0;
+	double aperture = 0.1;
 	vec3 temp0 = vec3_sub(&lookfrom, &lookat);
 	double dist_to_focus = vec3_length(&temp0);
 	//double dist_to_focus = 7.0;
