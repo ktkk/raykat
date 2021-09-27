@@ -32,3 +32,4 @@ I Completed the first book except for the materials. Here is what I'm planning t
 ## References
 - [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html) by Peter Shirley
 - [_raytracing-weekend_](https://github.com/Morozov-5F/raytracing-weekend) by Morozov-5F
+- [_Fast, Minimum Storage Ray/Triangle Intersection_](https://www.graphics.cornell.edu/pubs/1997/MT97.pdf) by Thomas Möller and Ben Trumbore
