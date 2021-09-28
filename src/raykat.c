@@ -4,10 +4,8 @@
 #include <time.h>
 
 #include "color.h"
-#include "hittable_list.h"
-#include "sphere.h"
-#include "triangle.h"
 #include "camera.h"
+#include "scene.h"
 
 #define ASPECT_RATIO (16.0/9.0)
 #define IMG_WIDTH 1080
@@ -53,19 +51,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 int main() {
 	/* WORLD */
-	hittable_list world = hittable_list_init(2);
-
-	point3 center0 = {{ 0, -1, 0 }};
-	point3 center1 = {{ 0, -1, -100.5 }};
-	point3 center2 = {{ -2, -1, 0 }};
-	point3 center3 = {{ 2, -1, 0 }};
-	hittable_list_add(&world, sphere_new(&center0, 0.5));
-	hittable_list_add(&world, sphere_new(&center1, 100));
-	hittable_list_add(&world, sphere_new(&center2, 0.5));
-	hittable_list_add(&world, sphere_new(&center3, 0.5));
-
-	point3 p0 = {{ 0.5, -0.5, 0.3 }}, p1 = {{ 0, 0.2, 0.5 }}, p2 = {{ 0.7, 0.2, 0 }};
-	hittable_list_add(&world, triangle_new(&p0, &p1, &p2));
+	hittable_list world = create_scene(SCENE_TRIS);
 
 	/* CAMERA */
 	point3 lookfrom = {{ 3.5, 3, 1 }};
