@@ -53,7 +53,7 @@ bool triangle_hit_test(point3* p0, point3* p1, point3* p2, ray* r, double t_min,
 	rec->t = t;
 	rec->p = ray_at(r, rec->t);
 	vec3 outward_normal = vec3_crossprod(&edge0, &edge1);
-	//hit_record_set_face_normal(rec, r, &outward_normal);
+	hit_record_set_face_normal(rec, r, &outward_normal);
 
 	return true;
 }
