@@ -71,5 +71,8 @@ hittable_list create_tris_scene() {
 	hittable_list_add(&scene, triangle_new(&p4, &p2, &p7));
 	hittable_list_add(&scene, triangle_new(&p4, &p2, &p0));
 
+	point3 center1 = {{ 0, -1, -100.5 }};
+	hittable_list_add(&scene, sphere_new(&center1, 100));
+
 	return scene;
 }
