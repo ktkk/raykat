@@ -24,6 +24,10 @@ hittable_list create_scene(scene scene_type) {
 	}
 }
 
+void cleanup_scene(hittable_list* scene) {
+	hittable_list_cleanup(scene);
+}
+
 hittable_list create_sphere_scene() {
 	hittable_list scene = hittable_list_init(4);
 

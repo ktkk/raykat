@@ -3,22 +3,29 @@
 #include "hittable_list.h"
 
 hittable_list hittable_list_init(int capacity) {
-	hittable_list* list = calloc(1, sizeof(hittable_list));
-	if (list == NULL) fprintf(stderr, "Calloc failed: %p", list);
+	hittable_list list;
 
-	list->objects.data = calloc(capacity, sizeof(hittable*));
-	if (list->objects.data == NULL) fprintf(stderr, "Calloc failed: %p", list->objects.data);
+	list.objects.data = calloc(capacity, sizeof(hittable*));
+	if (list.objects.data == NULL) fprintf(stderr, "Calloc failed: %p", list.objects.data);
 
-	list->objects.capacity = capacity;
-	list->objects.size = 0;
+	list.objects.capacity = capacity;
+	list.objects.size = 0;
 
-	return *list;
+	return list;
 }
 
-void hittable_list_clear(hittable_list* list) {
-	int capacity = list->objects.capacity;
+void hittable_list_cleanup(hittable_list* list) {
+	if (list == NULL) fprintf(stderr, "List is NULL: %p", list);
 
-	*list = hittable_list_init(capacity);
+	for (int i = 0; i < list->objects.size; ++i) {
+		hittable_delete(list->objects.data[i]);
+	}
+
+	free(list->objects.data);
+
+	list->objects.size = 0;
+	list->objects.capacity = 0;
+	list->objects.data = NULL;
 }
 
 void hittable_list_add(hittable_list* list, hittable* object) {
@@ -36,6 +43,8 @@ void hittable_list_add(hittable_list* list, hittable* object) {
 }
 
 bool hittable_list_hit(hittable_list* list, ray* r, double t_min, double t_max, hit_record* rec) {
+	if (list == NULL) fprintf(stderr, "List is NULL: %p", list);
+
 	hit_record temp_rec;
 	bool hit_anything = false;
 	double closest_so_far = t_max;

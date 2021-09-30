@@ -11,7 +11,7 @@ typedef struct {
 } hittable_list;
 
 hittable_list hittable_list_init(int capacity);
-void hittable_list_clear(hittable_list* list);
+void hittable_list_cleanup(hittable_list* list);
 void hittable_list_add(hittable_list* list, hittable* objects);
 bool hittable_list_hit(hittable_list* list, ray* r, double t_min, double t_max, hit_record* rec);
 

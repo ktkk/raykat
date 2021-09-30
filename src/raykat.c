@@ -93,4 +93,6 @@ int main() {
 	int msec = diff * 1000 / CLOCKS_PER_SEC;
 
 	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %d seconds and %d milliseconds.\n", msec / 1000, msec % 1000);
+
+	cleanup_scene(&world);
 }

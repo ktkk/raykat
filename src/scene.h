@@ -9,5 +9,6 @@ typedef enum {
 } scene;
 
 hittable_list create_scene(scene scene_type);
+void cleanup_scene(hittable_list* scene);
 
 #endif //SCENE_H

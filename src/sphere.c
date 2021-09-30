@@ -7,7 +7,7 @@ static bool sphere_hit_test(point3* center, double radius, ray* r, double t_min,
 
 sphere sphere_init(point3* center, double radius) {
 	sphere sphere = { .center = *center, .radius = radius };
-	hittable_init(&sphere.base, HITTABLE_TYPE_SPHERE, sphere_hit);
+	hittable_init(&sphere.base, HITTABLE_TYPE_SPHERE, sphere_hit, sphere_delete);
 
 	return sphere;
 }
@@ -26,6 +26,14 @@ bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_reco
 
 	sphere* psphere = (sphere*)hittable;
 	return sphere_hit_test(&psphere->center, psphere->radius, r, t_min, t_max, rec);
+}
+
+void sphere_delete(hittable* hittable) {
+	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p", hittable);
+	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d", hittable->type);
+
+	sphere* psphere = (sphere*)hittable;
+	free(psphere);
 }
 
 bool sphere_hit_test(point3* center, double radius, ray* r, double t_min, double t_max, hit_record* rec) {
