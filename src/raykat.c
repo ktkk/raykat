@@ -51,7 +51,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 int main() {
 	/* WORLD */
-	hittable_list world = create_scene(SCENE_TRIS);
+	hittable_list* world = create_scene(SCENE_TRIS);
 
 	/* CAMERA */
 	point3 lookfrom = {{ 3.5, 3, 1 }};
@@ -81,7 +81,7 @@ int main() {
 				double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
 
 				ray r = camera_get_ray(&cam, u, v);
-				color3 raycolor = ray_color(&r, &world, MAX_DEPTH);
+				color3 raycolor = ray_color(&r, world, MAX_DEPTH);
 				pixel_color = vec3_add(&pixel_color, &raycolor);
 			}
 
@@ -93,4 +93,6 @@ int main() {
 	int msec = diff * 1000 / CLOCKS_PER_SEC;
 
 	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %d seconds and %d milliseconds.\n", msec / 1000, msec % 1000);
+
+	cleanup_scene(world);
 }

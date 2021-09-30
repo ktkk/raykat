@@ -21,5 +21,6 @@ typedef struct {
 triangle triangle_init(point3* p0, point3* p1, point3* p2);
 hittable* triangle_new(point3* p0, point3* p1, point3* p2);
 bool triangle_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
+void triangle_delete(hittable* hittable);
 
 #endif //TRIANGLE_H

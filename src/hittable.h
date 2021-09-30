@@ -15,6 +15,7 @@ typedef struct {
 
 typedef struct hittable_s hittable;
 
+void hittable_delete(hittable* hittable);
 bool hittable_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
 
 void hit_record_set_face_normal(hit_record* rec, ray* r, vec3* outward_normal);
