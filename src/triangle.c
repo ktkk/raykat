@@ -14,7 +14,7 @@ triangle triangle_init(point3* p0, point3* p1, point3* p2) {
 }
 
 hittable* triangle_new(point3* p0, point3* p1, point3* p2) {
-	triangle* ptriangle = calloc(1, sizeof(triangle));
+	triangle* ptriangle = (triangle*)calloc(1, sizeof(*ptriangle));
 	if (ptriangle == NULL) fprintf(stderr, "Calloc failed: %p", ptriangle);
 
 	*ptriangle = triangle_init(p0, p1, p2);

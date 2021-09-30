@@ -13,7 +13,7 @@ sphere sphere_init(point3* center, double radius) {
 }
 
 hittable* sphere_new(point3* center, double radius) {
-	sphere* psphere = calloc(1, sizeof(sphere));
+	sphere* psphere = (sphere*)calloc(1, sizeof(*psphere));
 	if (psphere == NULL) fprintf(stderr, "Calloc failed: %p", psphere);
 
 	*psphere = sphere_init(center, radius);
