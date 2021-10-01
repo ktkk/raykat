@@ -1,3 +1,5 @@
+#include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "objloader.h"
@@ -15,19 +17,11 @@ static bool check_obj(char* filename) {
 	return false;
 }
 
-triangle* objloader_get_tris(char* filename) {
+obj_triangle* objloader_get_tris(char* filename, int* size) {
 	if (!check_obj(filename)) {
 		fprintf(stderr, "File \'%s\' is not an obj.\n", filename);
 		return NULL;
 	}
-
-	int points;
-	point3* pointarr;
-	int triangles;
-	triangle* trianglearr;
-
-	char* vertex_token = "v ";
-	char* face_token = "f ";
 
 	FILE* fp;
 
@@ -36,20 +30,45 @@ triangle* objloader_get_tris(char* filename) {
 		return NULL;
 	}
 
-	// TODO(katkak): Implement pattern searching and point/triangle parsing
-	//char line[LINE_LEN];
-	//while (fgets(line, LINE_LEN, fp)) {
-	//	if (strstr(line, vertex_token)) {
-	//		++points;
-	//	}
-	//	else if (strstr(line, face_token)) {
-	//		++triangles;
-	//	}
-	//}
+	char line_buf[LINE_LEN];
+
+	int npoints = 0;
+	int ntriangles = 0;
+	/* Get nr of points and tris */
+	while (fgets(line_buf, LINE_LEN, fp)) {
+		if (line_buf[0] == 'v' && line_buf[1] == ' ')
+			npoints++;
+		else if (line_buf[0] == 'f' && line_buf[1] == ' ')
+			ntriangles++;
+	}
+
+	*size = ntriangles;
+
+	point3* pointarr = (point3*)calloc(npoints, sizeof(*pointarr));
+	obj_triangle* trianglearr = (obj_triangle*)calloc(ntriangles, sizeof(*trianglearr));
+
+	int idx = 0;
+	rewind(fp);
+	while (fgets(line_buf, LINE_LEN, fp) && idx < npoints) {
+		double x, y, z;
+		if (sscanf(line_buf, "v %lf %lf %lf\n", &x, &y, &z)) {
+			point3 p = {{ x, y, z }};
+			pointarr[idx++] = p;
+		}
+	}
+
+	idx = 0;
+	rewind(fp);
+	while (fgets(line_buf, LINE_LEN, fp)) {
+		int p0, p1, p2;
+		if (sscanf(line_buf, "f %d %d %d", &p0, &p1, &p2)) {
+			obj_triangle triangle = { pointarr[p0 - 1], pointarr[p1 - 1], pointarr[p2 - 1] };
+			trianglearr[idx++] = triangle;
+		}
+	}
 
 	fclose(fp);
+	free(pointarr);
 
-	fprintf(stderr, "Nr of points: %d\nNr of triangles: %d\n", points, triangles);
-
-	return NULL;
+	return trianglearr;
 }
