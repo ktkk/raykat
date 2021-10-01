@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include "scene.h"
 
@@ -5,20 +6,25 @@
 
 #include "sphere.h"
 #include "triangle.h"
+#include "objloader.h"
 
 static hittable_list* create_sphere_scene();
 static hittable_list* create_tris_scene();
+static hittable_list* create_obj_scene();
 
-hittable_list* create_scene(scene scene_type) {
-	switch (scene_type) {
+hittable_list* create_scene(scene_type type) {
+	switch (type) {
 	case SCENE_SPHERES:
 		return create_sphere_scene();
 		break;
 	case SCENE_TRIS:
 		return create_tris_scene();
 		break;
+	case SCENE_OBJ:
+		return create_obj_scene();
+		break;
 	default:
-		fprintf(stderr, "Unknown scene type %d. Loading SCENE_SPHERES instead", scene_type);
+		fprintf(stderr, "Unknown scene type %d. Loading SCENE_SPHERES instead", type);
 		return create_sphere_scene();
 		break;
 	}
@@ -73,6 +79,24 @@ hittable_list* create_tris_scene() {
 	/* Bottom */
 	hittable_list_add(scene, triangle_new(&p4, &p2, &p7));
 	hittable_list_add(scene, triangle_new(&p4, &p2, &p0));
+
+	point3 center1 = {{ 0, -1, -100.5 }};
+	hittable_list_add(scene, sphere_new(&center1, 100));
+
+	return scene;
+}
+
+hittable_list* create_obj_scene() {
+	hittable_list* scene = hittable_list_init(500);
+
+	int ntris = 0;
+	obj_triangle* triangles = objloader_get_tris("test/monkey.obj", &ntris);
+
+	for (int i = 0; i < ntris; ++i) {
+		hittable_list_add(scene, triangle_new(&triangles[i].p0, &triangles[i].p1, &triangles[i].p2));
+	}
+
+	free(triangles);
 
 	point3 center1 = {{ 0, -1, -100.5 }};
 	hittable_list_add(scene, sphere_new(&center1, 100));

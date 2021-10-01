@@ -51,7 +51,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 int main() {
 	/* WORLD */
-	hittable_list* world = create_scene(SCENE_TRIS);
+	hittable_list* world = create_scene(SCENE_OBJ);
 
 	/* CAMERA */
 	point3 lookfrom = {{ 3.5, 3, 1 }};
