@@ -8,13 +8,13 @@ Watch [image.png](/image.png) for a rough estimate of what the raytracer is capa
 
 ## Build
 Build with make:
-```sh
-make
+```console
+$ make
 ```
 
 To generate the image, run the make rule "image":
-```sh
-make image
+```console
+$ make image
 ```
 
 ## Todo
@@ -23,7 +23,7 @@ I Completed the first book except for the materials. Here is what I'm planning t
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
 - [ ] Materials: I intentionally skipped this because translating the course's polymorphism was a pain for the hittables.
 - [ ] Command line arguments: Reading resolution and other settings from argv.
-- [ ] Read geometry from file.
+- [x] ~~Read geometry from file~~: Implemented a rudimentary obj parser. Loading objs with tons of tris slows down renders tremendously though.
 - [ ] Environment maps.
 - [ ] Threading: I have no experience with pthread.h so this ought to be fun.
 - [ ] Textures.
