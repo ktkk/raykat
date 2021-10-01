@@ -6,9 +6,10 @@
 typedef enum {
 	SCENE_SPHERES,
 	SCENE_TRIS,
-} scene;
+	SCENE_OBJ,
+} scene_type;
 
-hittable_list* create_scene(scene scene_type);
+hittable_list* create_scene(scene_type type);
 void cleanup_scene(hittable_list* scene);
 
 #endif //SCENE_H
