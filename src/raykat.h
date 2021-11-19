@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* CONSTANTS */
 #ifdef M_PI

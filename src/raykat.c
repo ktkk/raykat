@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "color.h"
+#include "output.h"
 #include "camera.h"
 #include "scene.h"
 
@@ -51,7 +51,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 int main() {
 	/* WORLD */
-	hittable_list* world = create_scene(SCENE_OBJ);
+	hittable_list* world = create_scene(SCENE_SPHERES);
 
 	/* CAMERA */
 	point3 lookfrom = {{ 3.5, 3, 1 }};
@@ -69,6 +69,8 @@ int main() {
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
 							      P3 means colors are in ascii
 							      followed by width and height */
+
+	// TODO(ktkk): Surround this loop with the window loop. Or find a different solution.
 	for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
 		fprintf(stderr, YELLOW "\rScanlines remaining: " RED "%3d" RESETCOL, i);
 		fflush(stderr);
@@ -85,7 +87,7 @@ int main() {
 				pixel_color = vec3_add(&pixel_color, &raycolor);
 			}
 
-			write_color(stdout, &pixel_color, SAMPLES_PER_PIXEL);
+			write_color_to_file(stdout, &pixel_color, SAMPLES_PER_PIXEL);
 		}
 	}
 
