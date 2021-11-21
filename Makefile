@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -g -std=c11
+CFLAGS=-Wall -Wextra -g -std=c11 $(shell pkg-config --cflags x11 xext)
 LD=$(CC)
-LDFLAGS=-lm
+LDFLAGS=-lm $(shell pkg-config --libs x11 xext)
 DEPFLAGS=-MMD -MP
 
 CONVERT=pnmtopng
