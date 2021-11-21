@@ -1,5 +1,6 @@
 #include "raykat.h"
 
+#include <X11/Xlib.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -7,9 +8,10 @@
 #include "camera.h"
 #include "scene.h"
 
-#define ASPECT_RATIO (16.0/9.0)
+#define IMG_HEIGHT 720
 #define IMG_WIDTH 1080
-#define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
+#define ASPECT_RATIO ((double) IMG_HEIGHT / (double) IMG_WIDTH)
+#define TOTAL_PIXELS (IMG_WIDTH * IMG_HEIGHT)
 #define SAMPLES_PER_PIXEL 100
 #define MAX_DEPTH 50
 
@@ -64,32 +66,53 @@ int main() {
 	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* RENDER */
+	pixel pixel_arr[TOTAL_PIXELS];
+
 	clock_t start = clock();
 
-	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
+	printf("P3\n%d %d\n255\n", IMG_WIDTH, (int)IMG_HEIGHT); /* PPM header:
 							      P3 means colors are in ascii
 							      followed by width and height */
 
-	// TODO(ktkk): Surround this loop with the window loop. Or find a different solution.
+	for (unsigned int i = 0; i < TOTAL_PIXELS; ++i) {
+		pixel_arr[i].x = i % IMG_WIDTH;
+		pixel_arr[i].y = i / IMG_WIDTH;
+
+		color3 bg_color = {{ HEX_TO_RGB(PREVIEW_BG) }};
+		//pixel_arr[i].color_rgb = bg_color;
+		//pixel_arr[i].color_hex = PREVIEW_BG;
+
+		//pixel_arr[i].rendered = false;
+	}
+
 	for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
-		fprintf(stderr, YELLOW "\rScanlines remaining: " RED "%3d" RESETCOL, i);
-		fflush(stderr);
-
 		for (int j = 0; j < IMG_WIDTH; ++j) {
-			color3 pixel_color = {{ 0, 0, 0 }};
-
-			for (int s = 0; s < SAMPLES_PER_PIXEL; ++s) {
-				double u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
-				double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
-
-				ray r = camera_get_ray(&cam, u, v);
-				color3 raycolor = ray_color(&r, world, MAX_DEPTH);
-				pixel_color = vec3_add(&pixel_color, &raycolor);
-			}
+			color3 pixel_color = {{ HEX_TO_RGB(PREVIEW_BG) }};
 
 			write_color_to_file(stdout, &pixel_color, SAMPLES_PER_PIXEL);
 		}
 	}
+
+	// TODO(ktkk): Surround this loop with the window loop. Or find a different solution.
+	//for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
+	//	fprintf(stderr, YELLOW "\rScanlines remaining: " RED "%3d" RESETCOL, i);
+	//	fflush(stderr);
+
+	//	for (int j = 0; j < IMG_WIDTH; ++j) {
+	//		color3 pixel_color = {{ 0, 0, 0 }};
+
+	//		for (int s = 0; s < SAMPLES_PER_PIXEL; ++s) {
+	//			double u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
+	//			double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
+
+	//			ray r = camera_get_ray(&cam, u, v);
+	//			color3 raycolor = ray_color(&r, world, MAX_DEPTH);
+	//			pixel_color = vec3_add(&pixel_color, &raycolor);
+	//		}
+
+	//		write_color_to_file(stdout, &pixel_color, SAMPLES_PER_PIXEL);
+	//	}
+	//}
 
 	clock_t diff = clock() - start;
 	int msec = diff * 1000 / CLOCKS_PER_SEC;

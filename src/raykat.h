@@ -2,10 +2,11 @@
 #define RAYKAT_H
 
 /* STD */
-#include <stdbool.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
+#include <stdbool.h>
 
 /* CONSTANTS */
 #ifdef M_PI
@@ -28,5 +29,6 @@ static inline double clamp(double x, double min, double max) {
 /* HEADERS */
 #include "vec3.h"
 #include "ray.h"
+#include "pixel.h"
 
 #endif //RAYKAT_H
