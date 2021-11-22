@@ -8,15 +8,11 @@
 
 typedef uint32_t hexcolor32;
 
-typedef struct {
-	int x, y;
+typedef struct pixel {
+	color3 color_rgb;
+	hexcolor32 color_hex;
 
-	// TODO(ktkk): Adding any more members to this struct causes a segfault. Figure out why.
-	//color3 color_rgb;
-	//hexcolor32 color_hex;
-	//unsigned int color_hex;
-
-	//bool rendered;
+	bool rendered;
 } pixel;
 
 #endif //PIXEL_H
