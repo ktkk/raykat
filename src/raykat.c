@@ -43,8 +43,8 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 	vec3 unit_direction = vec3_norm(&r->direction);
 	double hit = 0.5 * (unit_direction.y + 1.0);
 
-	color3 temp0 = {{ 0.5, 1.0, 1.0 }};
-	color3 temp1 = {{ 1, 0.7, 1.0 }};
+	color3 temp0 = {{ 1.0, 1.0, 1.0 }};
+	color3 temp1 = {{ 0.5, 0.7, 1.0 }};
 	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
 	color3 prod1 = vec3_multiply_double(&temp1, hit);
 	/* blendedValue = (1 - hit) * startValue + hit * endValue */
