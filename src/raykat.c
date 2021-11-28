@@ -7,10 +7,10 @@
 #include "camera.h"
 #include "scene.h"
 
-#define ASPECT_RATIO (16.0/9.0)
+#define ASPECT_RATIO (16.0 / 9.0)
 #define IMG_WIDTH 1080
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
-#define SAMPLES_PER_PIXEL 100
+#define SAMPLES_PER_PIXEL 50
 #define MAX_DEPTH 50
 
 /* ANSI colored output */
@@ -24,6 +24,8 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 	color3 black = {{ 0, 0, 0 }};
 	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
+
+	/* Color is determined by either the ray bouncing between surfaces endlessly until the recursion guard is hit, creating shadow, or it hitting the background. */
 
 	/* If object is hit */
 	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
@@ -41,8 +43,8 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 	vec3 unit_direction = vec3_norm(&r->direction);
 	double hit = 0.5 * (unit_direction.y + 1.0);
 
-	color3 temp0 = {{ 1.0, 1.0, 1.0 }};
-	color3 temp1 = {{ 0.5, 0.7, 1.0 }};
+	color3 temp0 = {{ 0.5, 1.0, 1.0 }};
+	color3 temp1 = {{ 1, 0.7, 1.0 }};
 	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
 	color3 prod1 = vec3_multiply_double(&temp1, hit);
 	/* blendedValue = (1 - hit) * startValue + hit * endValue */
@@ -51,7 +53,7 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 int main() {
 	/* WORLD */
-	hittable_list* world = create_scene(SCENE_OBJ);
+	hittable_list* world = create_scene(SCENE_SPHERES);
 
 	/* CAMERA */
 	point3 lookfrom = {{ 3.5, 3, 1 }};
@@ -69,6 +71,7 @@ int main() {
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
 							      P3 means colors are in ascii
 							      followed by width and height */
+
 	for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
 		fprintf(stderr, YELLOW "\rScanlines remaining: " RED "%3d" RESETCOL, i);
 		fflush(stderr);
