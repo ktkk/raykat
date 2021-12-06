@@ -22,6 +22,7 @@ I Completed the first book except for the materials. Here is what I'm planning t
 - [x] ~~Improve vector operations~~: Changed pointer params to const.
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
 - [ ] Materials: I intentionally skipped this because translating the course's polymorphism was a pain for the hittables.
+- [ ] Const correctness
 - [ ] Command line arguments: Reading resolution and other settings from argv.
 - [x] ~~Read geometry from file~~: Implemented a rudimentary obj parser. Loading objs with tons of tris slows down renders tremendously though.
 - [ ] Environment maps.
