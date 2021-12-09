@@ -15,23 +15,23 @@ triangle triangle_init(point3* p0, point3* p1, point3* p2) {
 
 hittable* triangle_new(point3* p0, point3* p1, point3* p2) {
 	triangle* ptriangle = (triangle*)calloc(1, sizeof(*ptriangle));
-	if (ptriangle == NULL) fprintf(stderr, "Calloc failed: %p", ptriangle);
+	if (ptriangle == NULL) fprintf(stderr, "Calloc failed: %p\n", ptriangle);
 
 	*ptriangle = triangle_init(p0, p1, p2);
 	return (hittable*)ptriangle;
 }
 
 bool triangle_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec) {
-	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p", hittable);
-	if (hittable->type != HITTABLE_TYPE_TRIANGLE) fprintf(stderr, "Hittable is not triangle but %d", hittable->type);
+	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p\n", hittable);
+	if (hittable->type != HITTABLE_TYPE_TRIANGLE) fprintf(stderr, "Hittable is not triangle but %d\n", hittable->type);
 
 	triangle* ptriangle = (triangle*)hittable;
 	return triangle_hit_test(&ptriangle->p0, &ptriangle->p1, &ptriangle->p2, r, t_min, t_max, rec);
 }
 
 void triangle_delete(hittable* hittable) {
-	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p", hittable);
-	if (hittable->type != HITTABLE_TYPE_TRIANGLE) fprintf(stderr, "Hittable is not triangle but %d", hittable->type);
+	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p\n", hittable);
+	if (hittable->type != HITTABLE_TYPE_TRIANGLE) fprintf(stderr, "Hittable is not triangle but %d\n", hittable->type);
 
 	triangle* ptriangle = (triangle*)hittable;
 

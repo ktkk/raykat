@@ -14,23 +14,23 @@ sphere sphere_init(point3* center, double radius, material* material) {
 
 hittable* sphere_new(point3* center, double radius, material* material) {
 	sphere* psphere = (sphere*)calloc(1, sizeof(*psphere));
-	if (psphere == NULL) fprintf(stderr, "Calloc failed: %p", psphere);
+	if (psphere == NULL) fprintf(stderr, "Calloc failed: %p\n", psphere);
 
 	*psphere = sphere_init(center, radius, material);
 	return (hittable*)psphere;
 }
 
 bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec) {
-	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p", hittable);
-	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d", hittable->type);
+	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p\n", hittable);
+	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d\n", hittable->type);
 
 	sphere* psphere = (sphere*)hittable;
 	return sphere_hit_test(&psphere->center, psphere->radius, psphere->mat_ptr, r, t_min, t_max, rec);
 }
 
 void sphere_delete(hittable* hittable) {
-	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p", hittable);
-	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d", hittable->type);
+	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p\n", hittable);
+	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d\n", hittable->type);
 
 	sphere* psphere = (sphere*)hittable;
 	free(psphere);
