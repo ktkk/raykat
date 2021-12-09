@@ -7,7 +7,7 @@ Watch [image.png](/image.png) for a rough estimate of what the raytracer is capa
 ![Progress image](/image.png)
 
 ## Build
-This branch is in development and currently does NOT build. See [Todo](##Todo).
+This branch is in development and currently does NOT build. See [Todo](#Todo).
 
 Build with make:
 ```console
