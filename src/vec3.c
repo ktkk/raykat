@@ -59,6 +59,11 @@ vec3 vec3_norm(const vec3* v) {
 	return vec3_divide(v, vec3_length(v));
 }
 
+vec3 vec3_reflect(const vec3* v, const vec3* n) {
+	vec3 temp = vec3_multiply_double(n, vec3_dotprod(v, n) * 2);
+	return vec3_sub(v, &temp);
+}
+
 vec3 vec3_random() {
 	vec3 temp = {{ RAND_DOUBLE, RAND_DOUBLE, RAND_DOUBLE }};
 	return temp;
@@ -100,4 +105,9 @@ vec3 vec3_random_in_unit_disk() {
 
 		return p;
 	}
+}
+
+bool vec3_near_zero(vec3* v) {
+	const double s = 1e-8;
+	return (fabs(v->v[0]) < s) && (fabs(v->v[1]) < s) && (fabs(v->v[2]) < s);
 }
