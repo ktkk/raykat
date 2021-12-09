@@ -3,14 +3,16 @@
 
 #include <stdbool.h>
 
+#include "material.h"
+
 #include "ray.h"
 
-struct material;
+//struct material;
 
 typedef struct {
 	point3 p;
 	vec3 normal;
-	struct material* mat_ptr;
+	material* mat_ptr;
 	double t;
 
 	bool front_face;
