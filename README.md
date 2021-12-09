@@ -7,6 +7,8 @@ Watch [image.png](/image.png) for a rough estimate of what the raytracer is capa
 ![Progress image](/image.png)
 
 ## Build
+This branch is in development and currently does NOT build. See [Todo](##Todo).
+
 Build with make:
 ```console
 $ make
@@ -21,7 +23,7 @@ $ make image
 I Completed the first book except for the materials. Here is what I'm planning to to next (eventually):
 - [x] ~~Improve vector operations~~: Changed pointer params to const.
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
-- [ ] Materials: I intentionally skipped this because translating the course's polymorphism was a pain for the hittables.
+- [ ] Materials: Partially implemented. (DOES NOT BUILD: Needs rewrite to proper functional style because hacked C OOP is not working as expected)
 - [ ] Const correctness
 - [ ] Command line arguments: Reading resolution and other settings from argv.
 - [x] ~~Read geometry from file~~: Implemented a rudimentary obj parser. Loading objs with tons of tris slows down renders tremendously though.
