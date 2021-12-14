@@ -6,6 +6,7 @@
 #include "color.h"
 #include "camera.h"
 #include "scene.h"
+#include "material.h"
 
 #define ASPECT_RATIO (16.0 / 9.0)
 #define IMG_WIDTH 1080
@@ -29,19 +30,12 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 	/* If object is hit */
 	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
-		//vec3 temp0 = vec3_add(&rec.p, &rec.normal);
-		//vec3 temp1 = vec3_random_unit_vector();
-		////vec3 temp1 = vec3_random_in_hemisphere(&rec.normal);
-		//point3 target = vec3_add(&temp0, &temp1);
+		ray scattered = { .origin = {{ 0, 0, 0 }}, .direction = {{ 0, 0, 0 }} };
+		color3 attenuation = {{ 0, 0, 0 }};
 
-		//ray temp2 = { rec.p, vec3_sub(&target, &rec.p) };
-		//color3 temp3 = ray_color(&temp2, world, depth - 1);
-		//return vec3_multiply_double(&temp3, 0.5);
-		ray scattered;
-		color3 attenuation;
-
-		if (rec.mat_ptr->scatter(&rec.mat_ptr, r, rec, attenuation, scattered)) {
+		if (material_scatter(rec.mat_ptr, r, &rec, &attenuation, &scattered)) {
 			color3 temp0 = ray_color(&scattered, world, depth - 1);
+
 			return vec3_multiply_vectors(&attenuation, &temp0);
 		}
 
