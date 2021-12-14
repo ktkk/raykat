@@ -6,6 +6,10 @@ DEPFLAGS=-MMD -MP
 
 CONVERT=pnmtopng
 
+VALGRIND=valgrind
+VALGRIND_PARAMS=--tool=memcheck --leak-check=yes --track-origins=yes
+VALGRIND_OUTPUT=output.log
+
 SRC=src
 SRCS=$(wildcard $(SRC)/*.c)
 BUILD_DIR=build
@@ -26,7 +30,7 @@ $(BUILD_DIR)/%.o: $(SRC)/%.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 
-.PHONY: clean run image
+.PHONY: clean run image log
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -34,6 +38,9 @@ clean:
 run: $(BUILD_DIR)/$(BIN)
 	@$<
 
+log: $(BUILD_DIR)/$(BIN)
+	$(VALGRIND) $(VALGRIND_PARAMS) --log-file=$(VALGRIND_OUTPUT) $<
+
 image: $(BUILD_DIR)/$(BIN)
-	$< > $(IMAGE).ppm
+	@$< > $(IMAGE).ppm
 	$(CONVERT) $(IMAGE).ppm > $(IMAGE).png
