@@ -8,6 +8,10 @@
 #include "triangle.h"
 #include "objloader.h"
 
+#include "material.h"
+#include "lambertian.h"
+#include "metal.h"
+
 static hittable_list* create_sphere_scene();
 static hittable_list* create_tris_scene();
 static hittable_list* create_obj_scene();
@@ -43,10 +47,19 @@ hittable_list* create_sphere_scene() {
 	point3 center2 = {{ -2, -1, 0 }};
 	point3 center3 = {{ 2, -1, 0 }};
 
-	hittable_list_add(scene, sphere_new(&center0, 0.5));
-	hittable_list_add(scene, sphere_new(&center1, 100));
-	hittable_list_add(scene, sphere_new(&center2, 0.5));
-	hittable_list_add(scene, sphere_new(&center3, 0.5));
+	color3 ground_color = {{ 0.8, 0.8, 0.0 }};
+	material* material_ground = lambertian_new(&ground_color);
+	color3 center_color = {{ 0.7, 0.3, 0.3 }};
+	material* material_center = lambertian_new(&center_color);
+	color3 left_color = {{ 0.8, 0.8, 0.8 }};
+	material* material_left = metal_new(&left_color);
+	color3 right_color = {{ 0.8, 0.6, 0.2 }};
+	material* material_right = metal_new(&right_color);
+
+	hittable_list_add(scene, sphere_new(&center0, 0.5, material_ground));
+	hittable_list_add(scene, sphere_new(&center1, 100, material_center));
+	hittable_list_add(scene, sphere_new(&center2, 0.5, material_left));
+	hittable_list_add(scene, sphere_new(&center3, 0.5, material_right));
 
 	return scene;
 }
@@ -80,8 +93,11 @@ hittable_list* create_tris_scene() {
 	hittable_list_add(scene, triangle_new(&p4, &p2, &p7));
 	hittable_list_add(scene, triangle_new(&p4, &p2, &p0));
 
+	color3 ground_color = {{ 0.8, 0.8, 0.0 }};
+	material* material_ground = lambertian_new(&ground_color);
+
 	point3 center1 = {{ 0, -1, -100.5 }};
-	hittable_list_add(scene, sphere_new(&center1, 100));
+	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
 
 	return scene;
 }
@@ -98,8 +114,11 @@ hittable_list* create_obj_scene() {
 
 	free(triangles);
 
+	color3 ground_color = {{ 0.8, 0.8, 0.0 }};
+	material* material_ground = lambertian_new(&ground_color);
+
 	point3 center1 = {{ 0, -1, -100.5 }};
-	hittable_list_add(scene, sphere_new(&center1, 100));
+	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
 
 	return scene;
 }
