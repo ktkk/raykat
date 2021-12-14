@@ -33,6 +33,9 @@ void sphere_delete(hittable* hittable) {
 	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d\n", hittable->type);
 
 	sphere* psphere = (sphere*)hittable;
+
+	material_delete(psphere->mat_ptr);
+
 	free(psphere);
 }
 

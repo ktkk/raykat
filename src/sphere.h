@@ -5,8 +5,6 @@
 
 #include "hittable.h"
 #include "hittable_shared.h"
-#include "material.h"
-#include "material_shared.h"
 #include "vec3.h"
 #include "ray.h"
 
@@ -15,7 +13,7 @@ typedef struct {
 
 	point3 center;
 	double radius;
-	struct material* mat_ptr;
+	material* mat_ptr;
 } sphere;
 
 sphere sphere_init(point3* center, double radius, material* material);
