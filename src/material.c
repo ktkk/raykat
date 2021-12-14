@@ -15,6 +15,6 @@ void material_delete(material* material) {
 	material->delete(material);
 }
 
-bool material_scatter(material* material, const ray* r_in, const struct hit_record* rec, color3* attenuation, ray* scattered) {
+bool material_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered) {
 	return material->scatter(material, r_in, rec, attenuation, scattered);
 }

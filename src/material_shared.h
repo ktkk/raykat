@@ -9,7 +9,7 @@ typedef enum {
 	MATERIAL_TYPE_METAL,
 } material_type;
 
-typedef bool (*material_scatter_fn)(material* material, const ray* r_in, const struct hit_record* rec, color3* attenuation, ray* scattered);
+typedef bool (*material_scatter_fn)(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 typedef void (*material_delete_fn)(material* material);
 
 struct material_s {
