@@ -29,7 +29,7 @@ bool metal_scatter(material* material, const ray* r_in, const hit_record* rec, c
 
 	ray temp1 = { rec->p, reflected };
 	*scattered = temp1;
-	attenuation = &pmetal->albedo;
+	*attenuation = pmetal->albedo;
 
 	return vec3_dotprod(&scattered->direction, &rec->normal) > 0;
 }
