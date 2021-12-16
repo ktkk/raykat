@@ -8,9 +8,10 @@ typedef struct {
 	material base;
 
 	color3 albedo;
+	double fuzz;
 } metal;
 
-material* metal_new(color3* albedo);
+material* metal_new(color3* albedo, double fuzz);
 void metal_delete(material* material);
 
 #endif //METAL_H
