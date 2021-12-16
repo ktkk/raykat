@@ -52,12 +52,12 @@ hittable_list* create_sphere_scene() {
 	color3 center_color = {{ 0.7, 0.3, 0.3 }};
 	material* material_center = lambertian_new(&center_color);
 	color3 left_color = {{ 0.8, 0.8, 0.8 }};
-	material* material_left = metal_new(&left_color);
+	material* material_left = metal_new(&left_color, 0.3);
 	color3 right_color = {{ 0.8, 0.6, 0.2 }};
-	material* material_right = metal_new(&right_color);
+	material* material_right = metal_new(&right_color, 1.0);
 
-	hittable_list_add(scene, sphere_new(&center0, 0.5, material_ground));
-	hittable_list_add(scene, sphere_new(&center1, 100, material_center));
+	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
+	hittable_list_add(scene, sphere_new(&center0, 0.5, material_center));
 	hittable_list_add(scene, sphere_new(&center2, 0.5, material_left));
 	hittable_list_add(scene, sphere_new(&center3, 0.5, material_right));
 
