@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "scene.h"
 
-#include "vec3.h"
 #include "raykat.h"
 
 #include "sphere.h"
@@ -13,6 +12,8 @@
 #include "lambertian.h"
 #include "metal.h"
 #include "dielectric.h"
+
+#include "vec3.h"
 
 static hittable_list* create_sphere_scene();
 static hittable_list* create_tris_scene();

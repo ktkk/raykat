@@ -1,6 +1,6 @@
-
-
 #include "camera.h"
+
+#include "raykat.h"
 
 #define FOCAL_LENGTH 1.0
 

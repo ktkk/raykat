@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "raykat.h"
+#include "vec3.h"
 
 #define CONVERT_COMPONENT(name) (int)(255.999 * name)
 

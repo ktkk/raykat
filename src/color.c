@@ -1,6 +1,8 @@
 #include <math.h>
 #include "color.h"
 
+#include "raykat.h"
+
 void write_color(FILE* stream, color3* color, int samples_per_pixel) {
 	double scale = 1.0 / samples_per_pixel;
 	double r = sqrt(scale * color->r);

@@ -8,6 +8,8 @@
 #include "scene.h"
 #include "material.h"
 
+#include "vec3.h"
+
 #define ASPECT_RATIO (3.0 / 2.0)
 #define IMG_WIDTH 1200
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)

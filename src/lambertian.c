@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "vec3.h"
 #include "lambertian.h"
 #include "hittable.h"
-#include "vec3.h"
 
 static bool lambertian_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 

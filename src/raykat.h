@@ -24,8 +24,4 @@ static inline double clamp(double x, double min, double max) {
 	return x;
 }
 
-/* HEADERS */
-#include "vec3.h"
-#include "ray.h"
-
 #endif //RAYKAT_H

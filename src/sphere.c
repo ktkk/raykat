@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
 #include "sphere.h"
 
 static bool sphere_hit_test(point3* center, double radius, material* mat_ptr, ray* r, double t_min, double t_max, hit_record* rec);

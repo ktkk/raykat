@@ -1,7 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "raykat.h"
+#include "vec3.h"
+#include "ray.h"
 
 typedef struct {
 	point3 origin;

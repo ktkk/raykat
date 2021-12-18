@@ -6,6 +6,8 @@
 
 #include "dielectric.h"
 #include "hittable.h"
+
+#define VEC3_IMPLEMENTATION
 #include "vec3.h"
 
 static bool dielectric_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
