@@ -7,6 +7,7 @@ typedef enum {
 	SCENE_SPHERES,
 	SCENE_TRIS,
 	SCENE_OBJ,
+	SCENE_RANDOM,
 } scene_type;
 
 hittable_list* create_scene(scene_type type);

@@ -3,6 +3,7 @@
 #include "scene.h"
 
 #include "vec3.h"
+#include "raykat.h"
 
 #include "sphere.h"
 #include "triangle.h"
@@ -16,6 +17,7 @@
 static hittable_list* create_sphere_scene();
 static hittable_list* create_tris_scene();
 static hittable_list* create_obj_scene();
+static hittable_list* create_random_scene();
 
 hittable_list* create_scene(scene_type type) {
 	switch (type) {
@@ -27,6 +29,9 @@ hittable_list* create_scene(scene_type type) {
 		break;
 	case SCENE_OBJ:
 		return create_obj_scene();
+		break;
+	case SCENE_RANDOM:
+		return create_random_scene();
 		break;
 	default:
 		fprintf(stderr, "Unknown scene type %d. Loading SCENE_SPHERES instead", type);
@@ -121,6 +126,73 @@ hittable_list* create_obj_scene() {
 
 	point3 center1 = {{ 0, -1, -100.5 }};
 	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
+
+	return scene;
+}
+
+hittable_list* create_random_scene() {
+	hittable_list* scene = hittable_list_init(500);
+
+#define SMALL_RADIUS 0.2
+#define BIG_RADIUS 1.0
+
+#define GLASS_IR 1.5
+
+	color3 ground_color = {{ 0.5, 0.5, 0.5 }};
+	material* material_ground = lambertian_new(&ground_color);
+
+	point3 ground_center = {{ 0, -1000, 0 }};
+	hittable_list_add(scene, sphere_new(&ground_center, 1000, material_ground));
+
+	for (int a = -11; a < 11; ++a) {
+		for (int b = -11; b < 11; ++b) {
+			double choose_mat = RAND_DOUBLE;
+			point3 center = {{ a + 0.9 * RAND_DOUBLE, 0.2, b + 0.9 * RAND_DOUBLE }};
+
+			point3 temp0 = {{ 4, 0.2, 0 }};
+			vec3 temp1 = vec3_sub(&center, &temp0);
+			if (vec3_length(&temp1) > 0.9) {
+				material* sphere_material;
+
+				if (choose_mat < 0.8) {
+					/* Diffuse */
+					color3 rand0 = vec3_random();
+					color3 rand1 = vec3_random();
+					color3 albedo = vec3_multiply_vectors(&rand0, &rand1);
+
+					sphere_material = lambertian_new(&albedo);
+					hittable_list_add(scene, sphere_new(&center, SMALL_RADIUS, sphere_material));
+				}
+				else if (choose_mat < 0.95) {
+					/* Metal */
+					color3 albedo = vec3_random_range(0.5, 1);
+					double fuzz = RAND_DOUBLE_RANGE(0, 0.5);
+
+					sphere_material = metal_new(&albedo, fuzz);
+					hittable_list_add(scene, sphere_new(&center, SMALL_RADIUS, sphere_material));
+				}
+				else {
+					/* Glass */
+					sphere_material = dielectric_new(GLASS_IR);
+					hittable_list_add(scene, sphere_new(&center, SMALL_RADIUS, sphere_material));
+				}
+			}
+		}
+	}
+
+	material* material1 = dielectric_new(GLASS_IR);
+	point3 center1 = {{ 0, 1, 0 }};
+	hittable_list_add(scene, sphere_new(&center1, BIG_RADIUS, material1));
+
+	color3 color2 = {{ 0.4, 0.2, 0.1 }};
+	material* material2 = lambertian_new(&color2);
+	point3 center2 = {{ -4, 1, 0 }};
+	hittable_list_add(scene, sphere_new(&center2, BIG_RADIUS, material2));
+
+	color3 color3 = {{ 0.7, 0.6, 0.5 }};
+	material* material3 = metal_new(&color3, 0.0);
+	point3 center3 = {{ 4, 1, 0 }};
+	hittable_list_add(scene, sphere_new(&center3, BIG_RADIUS, material3));
 
 	return scene;
 }
