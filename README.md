@@ -23,7 +23,7 @@ $ make image
 I Completed the first book except for the materials. Here is what I'm planning to to next (eventually):
 - [x] ~~Improve vector operations~~: Changed pointer params to const.
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
-- [ ] Materials: Partially implemented. Needs finishing touches.
+- [x] ~~Materials~~: Implemented. Lacks the shared pointer capability of the original. One material can only be used by one object.
 - [ ] Const correctness
 - [ ] Command line arguments: Reading resolution and other settings from argv.
 - [x] ~~Read geometry from file~~: Implemented a rudimentary obj parser. Loading objs with tons of tris slows down renders tremendously though.
