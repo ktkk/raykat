@@ -64,6 +64,19 @@ vec3 vec3_reflect(const vec3* v, const vec3* n) {
 	return vec3_sub(v, &temp);
 }
 
+vec3 vec3_refract(const vec3* uv, const vec3* n, double etai_over_etat) {
+	vec3 temp0 = vec3_invert(uv);
+	double temp1 = vec3_dotprod(&temp0, n);
+	double cos_theta = fmin(temp1, 1.0);
+
+	vec3 temp2 = vec3_multiply_double(n, cos_theta);
+	vec3 temp3 = vec3_add(uv, &temp2);
+	vec3 r_out_perp = vec3_multiply_double(&temp3, etai_over_etat);
+	vec3 r_out_parallel = vec3_multiply_double(n, -sqrt(fabs(1.0 - vec3_length_squared(&r_out_perp))));
+
+	return vec3_add(&r_out_perp, &r_out_parallel);
+}
+
 vec3 vec3_random() {
 	vec3 temp = {{ RAND_DOUBLE, RAND_DOUBLE, RAND_DOUBLE }};
 	return temp;

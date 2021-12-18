@@ -35,6 +35,7 @@ double vec3_length_squared(const vec3* v);
 double vec3_length(const vec3* v);
 vec3 vec3_norm(const vec3* v);
 vec3 vec3_reflect(const vec3* v, const vec3* n);
+vec3 vec3_refract(const vec3* uv, const vec3* n, double etai_over_etat);
 
 /* vec3 random generators */
 vec3 vec3_random();
