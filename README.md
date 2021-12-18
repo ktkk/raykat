@@ -20,7 +20,7 @@ $ make image
 ```
 
 ## Todo
-I Completed the first book except for the materials. Here is what I'm planning to to next (eventually):
+Here is what I'm planning to to next (eventually):
 - [x] ~~Improve vector operations~~: Changed pointer params to const.
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
 - [x] ~~Materials~~: Implemented. Lacks the shared pointer capability of the original. One material can only be used by one object.
