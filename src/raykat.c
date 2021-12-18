@@ -8,10 +8,10 @@
 #include "scene.h"
 #include "material.h"
 
-#define ASPECT_RATIO (16.0 / 9.0)
-#define IMG_WIDTH 1080
+#define ASPECT_RATIO (3.0 / 2.0)
+#define IMG_WIDTH 1200
 #define IMG_HEIGHT (int)(IMG_WIDTH / ASPECT_RATIO)
-#define SAMPLES_PER_PIXEL 50
+#define SAMPLES_PER_PIXEL 500
 #define MAX_DEPTH 50
 
 /* ANSI colored output */
@@ -56,16 +56,14 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 
 int main() {
 	/* WORLD */
-	hittable_list* world = create_scene(SCENE_SPHERES);
+	hittable_list* world = create_scene(SCENE_RANDOM);
 
 	/* CAMERA */
-	point3 lookfrom = {{ 3.5, 3, 1 }};
-	point3 lookat = {{ 0, -1, 0 }};
-	vec3 vup = {{ 0, 0, 1 }};
+	point3 lookfrom = {{ 13, 2, 3 }};
+	point3 lookat = {{ 0, 0, 0 }};
+	vec3 vup = {{ 0, 1, 0 }};
 	double aperture = 0.1;
-	vec3 temp0 = vec3_sub(&lookfrom, &lookat);
-	double dist_to_focus = vec3_length(&temp0);
-	//double dist_to_focus = 7.0;
+	double dist_to_focus = 10.0;
 	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* RENDER */
