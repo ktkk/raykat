@@ -4,20 +4,20 @@
 
 #define EPSILON 0.000001
 
-static bool triangle_hit_test(const point3* p0, const point3* p1, const point3* p2, const ray* r, const double t_min, const double t_max, hit_record* rec);
+static bool triangle_hit_test(const point3* p0, const point3* p1, const point3* p2, material* mat_ptr, const ray* r, const double t_min, const double t_max, hit_record* rec);
 
-triangle triangle_init(const point3* p0, const point3* p1, const point3* p2) {
-	triangle triangle = { .p0 = *p0, .p1 = *p1, .p2 = *p2 };
+triangle triangle_init(const point3* p0, const point3* p1, const point3* p2, material* material) {
+	triangle triangle = { .p0 = *p0, .p1 = *p1, .p2 = *p2, .mat_ptr = material };
 	hittable_init(&triangle.base, HITTABLE_TYPE_TRIANGLE, triangle_hit, triangle_delete);
 
 	return triangle;
 }
 
-hittable* triangle_new(const point3* p0, const point3* p1, const point3* p2) {
+hittable* triangle_new(const point3* p0, const point3* p1, const point3* p2, material* material) {
 	triangle* ptriangle = (triangle*)calloc(1, sizeof(*ptriangle));
 	if (ptriangle == NULL) fprintf(stderr, "Calloc failed: %p\n", ptriangle);
 
-	*ptriangle = triangle_init(p0, p1, p2);
+	*ptriangle = triangle_init(p0, p1, p2, material);
 	return (hittable*)ptriangle;
 }
 
@@ -26,7 +26,7 @@ bool triangle_hit(const hittable* hittable, const ray* r, const double t_min, co
 	if (hittable->type != HITTABLE_TYPE_TRIANGLE) fprintf(stderr, "Hittable is not triangle but %d\n", hittable->type);
 
 	const triangle* ptriangle = (triangle*)hittable;
-	return triangle_hit_test(&ptriangle->p0, &ptriangle->p1, &ptriangle->p2, r, t_min, t_max, rec);
+	return triangle_hit_test(&ptriangle->p0, &ptriangle->p1, &ptriangle->p2, ptriangle->mat_ptr, r, t_min, t_max, rec);
 }
 
 void triangle_delete(const hittable* hittable) {
@@ -35,10 +35,12 @@ void triangle_delete(const hittable* hittable) {
 
 	triangle* ptriangle = (triangle*)hittable;
 
+	material_delete(ptriangle->mat_ptr);
+
 	free(ptriangle);
 }
 
-bool triangle_hit_test(const point3* p0, const point3* p1, const point3* p2, const ray* r, const double t_min, const double t_max, hit_record* rec) {
+bool triangle_hit_test(const point3* p0, const point3* p1, const point3* p2, material* mat_ptr, const ray* r, const double t_min, const double t_max, hit_record* rec) {
 	const vec3 edge0 = vec3_sub(p1, p0);
 	const vec3 edge1 = vec3_sub(p2, p0);
 
@@ -62,6 +64,7 @@ bool triangle_hit_test(const point3* p0, const point3* p1, const point3* p2, con
 	rec->p = ray_at(r, rec->t);
 	const vec3 outward_normal = vec3_crossprod(&edge0, &edge1);
 	hit_record_set_face_normal(rec, r, &outward_normal);
+	rec->mat_ptr = mat_ptr;
 
 	return true;
 }

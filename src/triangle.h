@@ -16,10 +16,11 @@ typedef struct {
 		point3 p1;
 		point3 p2;
 	};
+	material* mat_ptr;
 } triangle;
 
-triangle triangle_init(const point3* p0, const point3* p1, const point3* p2);
-hittable* triangle_new(const point3* p0, const point3* p1, const point3* p2);
+triangle triangle_init(const point3* p0, const point3* p1, const point3* p2, material* material);
+hittable* triangle_new(const point3* p0, const point3* p1, const point3* p2, material* material);
 bool triangle_hit(const hittable* hittable, const ray* r, const double t_min, const double t_max, hit_record* rec);
 void triangle_delete(const hittable* hittable);
 
