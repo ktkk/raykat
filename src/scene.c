@@ -82,24 +82,38 @@ hittable_list* create_tris_scene() {
 	// TODO(katkak): Optimize this.
 
 	/* Create tris from these points */
+	const color3 tri_color = {{ 0.8, 0.6, 0.2 }};
+
 	/* Front */
-	hittable_list_add(scene, triangle_new(&p0, &p1, &p2));
-	hittable_list_add(scene, triangle_new(&p0, &p1, &p3));
+	material* material_tri1 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p0, &p1, &p2, material_tri1));
+	material* material_tri2 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p0, &p1, &p3, material_tri2));
 	/* Left */
-	hittable_list_add(scene, triangle_new(&p4, &p3, &p0));
-	hittable_list_add(scene, triangle_new(&p4, &p3, &p5));
+	material* material_tri3 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p4, &p3, &p0, material_tri3));
+	material* material_tri4 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p4, &p3, &p5, material_tri4));
 	/* Top */
-	hittable_list_add(scene, triangle_new(&p3, &p6, &p1));
-	hittable_list_add(scene, triangle_new(&p3, &p6, &p5));
+	material* material_tri5 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p3, &p6, &p1, material_tri5));
+	material* material_tri6 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p3, &p6, &p5, material_tri6));
 	/* Right */
-	hittable_list_add(scene, triangle_new(&p2, &p6, &p7));
-	hittable_list_add(scene, triangle_new(&p2, &p6, &p1));
+	material* material_tri7 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p2, &p6, &p7, material_tri7));
+	material* material_tri8 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p2, &p6, &p1, material_tri8));
 	/* Back */
-	hittable_list_add(scene, triangle_new(&p7, &p5, &p4));
-	hittable_list_add(scene, triangle_new(&p7, &p5, &p6));
+	material* material_tri9 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p7, &p5, &p4, material_tri9));
+	material* material_tri10 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p7, &p5, &p6, material_tri10));
 	/* Bottom */
-	hittable_list_add(scene, triangle_new(&p4, &p2, &p7));
-	hittable_list_add(scene, triangle_new(&p4, &p2, &p0));
+	material* material_tri11 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p4, &p2, &p7, material_tri11));
+	material* material_tri12 = lambertian_new(&tri_color);
+	hittable_list_add(scene, triangle_new(&p4, &p2, &p0, material_tri12));
 
 	const color3 ground_color = {{ 0.8, 0.8, 0.0 }};
 	material* material_ground = lambertian_new(&ground_color);
@@ -116,8 +130,10 @@ hittable_list* create_obj_scene() {
 	int ntris = 0;
 	obj_triangle* triangles = objloader_get_tris("test/monkey.obj", &ntris);
 
+	const color3 obj_color = {{ 0.8, 0.2, 0.0 }};
 	for (int i = 0; i < ntris; ++i) {
-		hittable_list_add(scene, triangle_new(&triangles[i].p0, &triangles[i].p1, &triangles[i].p2));
+		material* material_tri = lambertian_new(&obj_color);
+		hittable_list_add(scene, triangle_new(&triangles[i].p0, &triangles[i].p1, &triangles[i].p2, material_tri));
 	}
 
 	free(triangles);
