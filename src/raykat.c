@@ -22,13 +22,14 @@
 #define GREEN "\e[0;32m"
 #define RESETCOL "\e[0m"
 
-color3 ray_color(ray* r, hittable_list* world, int depth) {
+color3 ray_color(const ray* r, const hittable_list* world, const int depth) {
 	hit_record rec;
 
-	color3 black = {{ 0, 0, 0 }};
+	const color3 black = {{ 0, 0, 0 }};
 	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
 
-	/* Color is determined by either the ray bouncing between surfaces endlessly until the recursion guard is hit, creating shadow, or it hitting the background. */
+	/* Color is determined by either the ray bouncing between surfaces endlessly until the recursion guard is hit,
+	 * creating shadow, or it hitting the background. */
 
 	/* If object is hit */
 	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
@@ -45,13 +46,13 @@ color3 ray_color(ray* r, hittable_list* world, int depth) {
 	}
 
 	/* Background lerp */
-	vec3 unit_direction = vec3_norm(&r->direction);
-	double hit = 0.5 * (unit_direction.y + 1.0);
+	const vec3 unit_direction = vec3_norm(&r->direction);
+	const double hit = 0.5 * (unit_direction.y + 1.0);
 
-	color3 temp0 = {{ 1.0, 1.0, 1.0 }};
-	color3 temp1 = {{ 0.5, 0.7, 1.0 }};
-	color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
-	color3 prod1 = vec3_multiply_double(&temp1, hit);
+	const color3 temp0 = {{ 1.0, 1.0, 1.0 }};
+	const color3 temp1 = {{ 0.5, 0.7, 1.0 }};
+	const color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
+	const color3 prod1 = vec3_multiply_double(&temp1, hit);
 	/* blendedValue = (1 - hit) * startValue + hit * endValue */
 	return vec3_add(&prod0, &prod1);
 }
@@ -61,15 +62,15 @@ int main() {
 	hittable_list* world = create_scene(SCENE_RANDOM);
 
 	/* CAMERA */
-	point3 lookfrom = {{ 13, 2, 3 }};
-	point3 lookat = {{ 0, 0, 0 }};
-	vec3 vup = {{ 0, 1, 0 }};
-	double aperture = 0.1;
-	double dist_to_focus = 10.0;
-	camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
+	const point3 lookfrom = {{ 13, 2, 3 }};
+	const point3 lookat = {{ 0, 0, 0 }};
+	const vec3 vup = {{ 0, 1, 0 }};
+	const double aperture = 0.1;
+	const double dist_to_focus = 10.0;
+	const camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* RENDER */
-	clock_t start = clock();
+	const clock_t start = clock();
 
 	printf("P3\n%d %d\n255\n", IMG_WIDTH, IMG_HEIGHT); /* PPM header:
 							      P3 means colors are in ascii
@@ -83,10 +84,10 @@ int main() {
 			color3 pixel_color = {{ 0, 0, 0 }};
 
 			for (int s = 0; s < SAMPLES_PER_PIXEL; ++s) {
-				double u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
-				double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
+				const double u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
+				const double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
 
-				ray r = camera_get_ray(&cam, u, v);
+				const ray r = camera_get_ray(&cam, u, v);
 				color3 raycolor = ray_color(&r, world, MAX_DEPTH);
 				pixel_color = vec3_add(&pixel_color, &raycolor);
 			}
@@ -95,8 +96,8 @@ int main() {
 		}
 	}
 
-	clock_t diff = clock() - start;
-	int msec = diff * 1000 / CLOCKS_PER_SEC;
+	const clock_t diff = clock() - start;
+	const int msec = diff * 1000 / CLOCKS_PER_SEC;
 
 	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %d seconds and %d milliseconds.\n", msec / 1000, msec % 1000);
 

@@ -13,13 +13,13 @@ typedef struct {
 	double lens_radius;
 } camera;
 
-camera camera_init(point3* lookfrom,
-		   point3* lookat,
-		   vec3* vup,
-		   double vfov,
-		   double aspect_ratio,
-		   double aperture,
-		   double focus_dist);
-ray camera_get_ray(camera* cam, double u, double v);
+camera camera_init(const point3* lookfrom,
+		   const point3* lookat,
+		   const vec3* vup,
+		   const double vfov,
+		   const double aspect_ratio,
+		   const double aperture,
+		   const double focus_dist);
+ray camera_get_ray(const camera* cam, const double u, const double v);
 
 #endif //CAMERA_H

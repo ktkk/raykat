@@ -8,7 +8,7 @@
 
 #define LINE_LEN 512
 
-static bool check_obj(char* filename) {
+static bool check_obj(const char* filename) {
 	char* ext;
 	if ((ext = strrchr(filename, '.')) != NULL) {
 		return strcmp(ext, ".obj") == 0;
@@ -17,7 +17,7 @@ static bool check_obj(char* filename) {
 	return false;
 }
 
-obj_triangle* objloader_get_tris(char* filename, int* size) {
+obj_triangle* objloader_get_tris(const char* filename, int* size) {
 	if (!check_obj(filename)) {
 		fprintf(stderr, "File \'%s\' is not an obj.\n", filename);
 		return NULL;

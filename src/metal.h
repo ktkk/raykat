@@ -11,7 +11,7 @@ typedef struct {
 	double fuzz;
 } metal;
 
-material* metal_new(color3* albedo, double fuzz);
-void metal_delete(material* material);
+material* metal_new(const color3* albedo, const double fuzz);
+void metal_delete(const material* material);
 
 #endif //METAL_H

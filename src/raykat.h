@@ -18,7 +18,7 @@
 #define DEG_TO_RAD(deg) (((deg) * PI) / 180.0)
 #define RAND_DOUBLE (rand() / (RAND_MAX + 1.0))
 #define RAND_DOUBLE_RANGE(min, max) ((max - min) * RAND_DOUBLE + min)
-static inline double clamp(double x, double min, double max) {
+static inline double clamp(const double x, const double min, const double max) {
 	if (x < min) return min;
 	if (x > max) return max;
 	return x;

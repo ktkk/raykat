@@ -20,7 +20,7 @@ static hittable_list* create_tris_scene();
 static hittable_list* create_obj_scene();
 static hittable_list* create_random_scene();
 
-hittable_list* create_scene(scene_type type) {
+hittable_list* create_scene(const scene_type type) {
 	switch (type) {
 	case SCENE_SPHERES:
 		return create_sphere_scene();
@@ -49,18 +49,18 @@ hittable_list* create_sphere_scene() {
 	hittable_list* scene = hittable_list_init(4);
 
 	/* Sphere centers */
-	point3 center0 = {{ 0, -1, 0 }};
-	point3 center1 = {{ 0, -1, -100.5 }};
-	point3 center2 = {{ -2, -1, 0 }};
-	point3 center3 = {{ 2, -1, 0 }};
+	const point3 center0 = {{ 0, -1, 0 }};
+	const point3 center1 = {{ 0, -1, -100.5 }};
+	const point3 center2 = {{ -2, -1, 0 }};
+	const point3 center3 = {{ 2, -1, 0 }};
 
-	color3 ground_color = {{ 0.8, 0.8, 0.0 }};
+	const color3 ground_color = {{ 0.8, 0.8, 0.0 }};
 	material* material_ground = lambertian_new(&ground_color);
-	color3 center_color = {{ 0.1, 0.2, 0.5 }};
+	const color3 center_color = {{ 0.1, 0.2, 0.5 }};
 	material* material_center = lambertian_new(&center_color);
 	material* material_left_1 = dielectric_new(1.5);
 	material* material_left_2 = dielectric_new(1.5);
-	color3 right_color = {{ 0.8, 0.6, 0.2 }};
+	const color3 right_color = {{ 0.8, 0.6, 0.2 }};
 	material* material_right = metal_new(&right_color, 0.0);
 
 	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
@@ -76,7 +76,7 @@ hittable_list* create_tris_scene() {
 	hittable_list* scene = hittable_list_init(12);
 
 	/* 8 points to represent 12 tris of the cube */
-	point3 p0 = {{ 0.5, -0.5, -0.5 }}, p1 = {{ -0.5, -0.5, 0.5 }}, p2 = {{ -0.5, -0.5, -0.5 }},
+	const point3 p0 = {{ 0.5, -0.5, -0.5 }}, p1 = {{ -0.5, -0.5, 0.5 }}, p2 = {{ -0.5, -0.5, -0.5 }},
 	       p3 = {{ 0.5, -0.5, 0.5 }}, p4 = {{ 0.5, -1.5, -0.5 }}, p5 = {{ 0.5, -1.5, 0.5 }},
 	       p6 = {{ -0.5, -1.5, 0.5 }}, p7 = {{ -0.5, -1.5, -0.5 }};
 	// TODO(katkak): Optimize this.
@@ -101,10 +101,10 @@ hittable_list* create_tris_scene() {
 	hittable_list_add(scene, triangle_new(&p4, &p2, &p7));
 	hittable_list_add(scene, triangle_new(&p4, &p2, &p0));
 
-	color3 ground_color = {{ 0.8, 0.8, 0.0 }};
+	const color3 ground_color = {{ 0.8, 0.8, 0.0 }};
 	material* material_ground = lambertian_new(&ground_color);
 
-	point3 center1 = {{ 0, -1, -100.5 }};
+	const point3 center1 = {{ 0, -1, -100.5 }};
 	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
 
 	return scene;
@@ -122,10 +122,10 @@ hittable_list* create_obj_scene() {
 
 	free(triangles);
 
-	color3 ground_color = {{ 0.8, 0.8, 0.0 }};
+	const color3 ground_color = {{ 0.8, 0.8, 0.0 }};
 	material* material_ground = lambertian_new(&ground_color);
 
-	point3 center1 = {{ 0, -1, -100.5 }};
+	const point3 center1 = {{ 0, -1, -100.5 }};
 	hittable_list_add(scene, sphere_new(&center1, 100, material_ground));
 
 	return scene;
@@ -139,34 +139,34 @@ hittable_list* create_random_scene() {
 
 #define GLASS_IR 1.5
 
-	color3 ground_color = {{ 0.5, 0.5, 0.5 }};
+	const color3 ground_color = {{ 0.5, 0.5, 0.5 }};
 	material* material_ground = lambertian_new(&ground_color);
 
-	point3 ground_center = {{ 0, -1000, 0 }};
+	const point3 ground_center = {{ 0, -1000, 0 }};
 	hittable_list_add(scene, sphere_new(&ground_center, 1000, material_ground));
 
 	for (int a = -11; a < 11; ++a) {
 		for (int b = -11; b < 11; ++b) {
-			double choose_mat = RAND_DOUBLE;
-			point3 center = {{ a + 0.9 * RAND_DOUBLE, 0.2, b + 0.9 * RAND_DOUBLE }};
+			const double choose_mat = RAND_DOUBLE;
+			const point3 center = {{ a + 0.9 * RAND_DOUBLE, 0.2, b + 0.9 * RAND_DOUBLE }};
 
-			point3 temp0 = {{ 4, 0.2, 0 }};
-			vec3 temp1 = vec3_sub(&center, &temp0);
+			const point3 temp0 = {{ 4, 0.2, 0 }};
+			const vec3 temp1 = vec3_sub(&center, &temp0);
 			if (vec3_length(&temp1) > 0.9) {
 				material* sphere_material;
 
 				if (choose_mat < 0.8) {
 					/* Diffuse */
-					color3 rand0 = vec3_random();
-					color3 rand1 = vec3_random();
-					color3 albedo = vec3_multiply_vectors(&rand0, &rand1);
+					const color3 rand0 = vec3_random();
+					const color3 rand1 = vec3_random();
+					const color3 albedo = vec3_multiply_vectors(&rand0, &rand1);
 
 					sphere_material = lambertian_new(&albedo);
 					hittable_list_add(scene, sphere_new(&center, SMALL_RADIUS, sphere_material));
 				}
 				else if (choose_mat < 0.95) {
 					/* Metal */
-					color3 albedo = vec3_random_range(0.5, 1);
+					const color3 albedo = vec3_random_range(0.5, 1);
 					double fuzz = RAND_DOUBLE_RANGE(0, 0.5);
 
 					sphere_material = metal_new(&albedo, fuzz);
@@ -182,17 +182,17 @@ hittable_list* create_random_scene() {
 	}
 
 	material* material1 = dielectric_new(GLASS_IR);
-	point3 center1 = {{ 0, 1, 0 }};
+	const point3 center1 = {{ 0, 1, 0 }};
 	hittable_list_add(scene, sphere_new(&center1, BIG_RADIUS, material1));
 
-	color3 color2 = {{ 0.4, 0.2, 0.1 }};
+	const color3 color2 = {{ 0.4, 0.2, 0.1 }};
 	material* material2 = lambertian_new(&color2);
-	point3 center2 = {{ -4, 1, 0 }};
+	const point3 center2 = {{ -4, 1, 0 }};
 	hittable_list_add(scene, sphere_new(&center2, BIG_RADIUS, material2));
 
-	color3 color3 = {{ 0.7, 0.6, 0.5 }};
+	const color3 color3 = {{ 0.7, 0.6, 0.5 }};
 	material* material3 = metal_new(&color3, 0.0);
-	point3 center3 = {{ 4, 1, 0 }};
+	const point3 center3 = {{ 4, 1, 0 }};
 	hittable_list_add(scene, sphere_new(&center3, BIG_RADIUS, material3));
 
 	return scene;

@@ -10,7 +10,7 @@ typedef struct {
 	double ir;
 } dielectric;
 
-material* dielectric_new(double index_of_refraction);
-void dielectric_delete(material* material);
+material* dielectric_new(const double index_of_refraction);
+void dielectric_delete(const material* material);
 
 #endif //DIELECTRIC_H

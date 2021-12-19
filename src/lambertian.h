@@ -10,7 +10,7 @@ typedef struct {
 	color3 albedo;
 } lambertian;
 
-material* lambertian_new(color3* albedo);
-void lambertian_delete(material* material);
+material* lambertian_new(const color3* albedo);
+void lambertian_delete(const material* material);
 
 #endif //LAMBERTIAN_H

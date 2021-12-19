@@ -10,7 +10,7 @@ typedef enum {
 	SCENE_RANDOM,
 } scene_type;
 
-hittable_list* create_scene(scene_type type);
+hittable_list* create_scene(const scene_type type);
 void cleanup_scene(hittable_list* scene);
 
 #endif //SCENE_H

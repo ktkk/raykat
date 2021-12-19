@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "hittable_list.h"
 
-hittable_list* hittable_list_init(int capacity) {
+hittable_list* hittable_list_init(const int capacity) {
 	hittable_list* list = (hittable_list*)calloc(1, sizeof(*list));
 	if (list == NULL) fprintf(stderr, "Calloc failed: %p\n", list);
 
@@ -45,7 +45,7 @@ void hittable_list_add(hittable_list* list, hittable* object) {
 	list->data[list->size++] = object;
 }
 
-bool hittable_list_hit(hittable_list* list, ray* r, double t_min, double t_max, hit_record* rec) {
+bool hittable_list_hit(const hittable_list* list, const ray* r, const double t_min, const double t_max, hit_record* rec) {
 	if (list == NULL) fprintf(stderr, "List is NULL: %p\n", list);
 
 	hit_record temp_rec;

@@ -7,7 +7,7 @@
 
 typedef struct hittable_s hittable;
 
-void hittable_delete(hittable* hittable);
-bool hittable_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
+void hittable_delete(const hittable* hittable);
+bool hittable_hit(const hittable* hittable, const ray* r, const double t_min, const double t_max, hit_record* rec);
 
 #endif //HITTABLE_H

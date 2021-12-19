@@ -150,7 +150,7 @@ VEC3DEF vec3 vec3_random_in_unit_disk() {
 	}
 }
 
-VEC3DEF bool vec3_near_zero(vec3* v) {
+VEC3DEF bool vec3_near_zero(const vec3* v) {
 	const double s = 1e-8;
 	return (fabs(v->v[0]) < s) && (fabs(v->v[1]) < s) && (fabs(v->v[2]) < s);
 }

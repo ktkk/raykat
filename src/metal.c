@@ -6,9 +6,9 @@
 #include "hittable.h"
 #include "vec3.h"
 
-static bool metal_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
+static bool metal_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 
-material* metal_new(color3* albedo, double fuzz) {
+material* metal_new(const color3* albedo, const double fuzz) {
 	metal* pmetal = (metal*)calloc(1, sizeof(*pmetal));
 	if (pmetal == NULL) fprintf(stderr, "Calloc failed: %p\n", pmetal);
 
@@ -19,25 +19,25 @@ material* metal_new(color3* albedo, double fuzz) {
 	return (material*)pmetal;
 }
 
-bool metal_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered) {
+bool metal_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered) {
 	if (material == NULL) fprintf(stderr, "Material is NULL: %p\n", material);
 	if (material->type != MATERIAL_TYPE_METAL) fprintf(stderr, "Material is not metal but %d\n", material->type);
 
-	metal* pmetal = (metal*)material;
+	const metal* pmetal = (metal*)material;
 
-	vec3 temp0 = vec3_norm(&r_in->direction);
-	vec3 reflected = vec3_reflect(&temp0, &rec->normal);
+	const vec3 temp0 = vec3_norm(&r_in->direction);
+	const vec3 reflected = vec3_reflect(&temp0, &rec->normal);
 
-	vec3 temp1 = vec3_random_in_unit_sphere();
-	vec3 temp2 = vec3_multiply_double(&temp1, pmetal->fuzz);
-	ray temp3 = { rec->p, vec3_add(&reflected, &temp2) };
+	const vec3 temp1 = vec3_random_in_unit_sphere();
+	const vec3 temp2 = vec3_multiply_double(&temp1, pmetal->fuzz);
+	const ray temp3 = { rec->p, vec3_add(&reflected, &temp2) };
 	*scattered = temp3;
 	*attenuation = pmetal->albedo;
 
 	return vec3_dotprod(&scattered->direction, &rec->normal) > 0;
 }
 
-void metal_delete(material* material) {
+void metal_delete(const material* material) {
 	if (material == NULL) fprintf(stderr, "Material is NULL: %p\n", material);
 	if (material->type != MATERIAL_TYPE_METAL) fprintf(stderr, "Material is not metal but %d\n", material->type);
 

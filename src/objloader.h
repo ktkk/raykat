@@ -18,7 +18,7 @@ typedef struct {
 	point3 p2;
 } obj_triangle;
 
-obj_triangle* objloader_get_tris(char* filename, int* size);
+obj_triangle* objloader_get_tris(const char* filename, int* size);
 void objloader_cleanup();
 
 #endif //OBJLOADER_H

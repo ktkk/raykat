@@ -16,9 +16,9 @@ typedef struct {
 	material* mat_ptr;
 } sphere;
 
-sphere sphere_init(point3* center, double radius, material* material);
-hittable* sphere_new(point3* center, double radius, material* material);
-bool sphere_hit(hittable* hittable, ray* r, double t_min, double t_max, hit_record* rec);
-void sphere_delete(hittable* hittable);
+sphere sphere_init(const point3* center, const double radius, material* material);
+hittable* sphere_new(const point3* center, const double radius, material* material);
+bool sphere_hit(const hittable* hittable, const ray* r, const double t_min, const double t_max, hit_record* rec);
+void sphere_delete(const hittable* hittable);
 
 #endif //SPHERE_H

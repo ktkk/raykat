@@ -22,7 +22,7 @@ Here is what I'm planning to to next (eventually):
 - [x] ~~Improve vector operations~~: Changed pointer params to const.
 - [x] ~~Fix the coordinate system~~: This was really as easy as changing v-up.
 - [x] ~~Materials~~: Implemented. Lacks the shared pointer capability of the original. One material can only be used by one object.
-- [ ] Const correctness.
+- [x] ~~Const correctness~~: Const all the things.
 - [x] ~~Inline utility functions~~: Vec3.h now just holds static inline declarations.
 - [ ] Command line arguments: Reading resolution and other settings from argv.
 - [x] ~~Read geometry from file~~: Implemented a rudimentary obj parser. Loading objs with tons of tris slows down renders tremendously though.

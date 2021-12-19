@@ -15,6 +15,6 @@ typedef struct {
 	bool front_face;
 } hit_record;
 
-void hit_record_set_face_normal(hit_record* rec, ray* r, vec3* outward_normal);
+void hit_record_set_face_normal(hit_record* rec, const ray* r, const vec3* outward_normal);
 
 #endif //HIT_RECORD_H

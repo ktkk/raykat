@@ -9,7 +9,7 @@
 
 typedef struct material_s material;
 
-void material_delete(material* material);
-bool material_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
+void material_delete(const material* material);
+bool material_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 
 #endif //MATERIAL_H

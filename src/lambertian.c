@@ -6,9 +6,9 @@
 #include "lambertian.h"
 #include "hittable.h"
 
-static bool lambertian_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
+static bool lambertian_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 
-material* lambertian_new(color3* albedo) {
+material* lambertian_new(const color3* albedo) {
 	lambertian* plambertian = (lambertian*)calloc(1, sizeof(*plambertian));
 	if (plambertian == NULL) fprintf(stderr, "Calloc failed: %p\n", plambertian);
 
@@ -18,28 +18,28 @@ material* lambertian_new(color3* albedo) {
 	return (material*)plambertian;
 }
 
-static bool lambertian_scatter(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered) {
+static bool lambertian_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered) {
 	if (material == NULL) fprintf(stderr, "Material is NULL: %p\n", material);
 	if (material->type != MATERIAL_TYPE_LAMBERTIAN) fprintf(stderr, "Material is not lambertian but %d\n", material->type);
 
 	(void)r_in;
 
-	lambertian* plambertian = (lambertian*)material;
+	const lambertian* plambertian = (lambertian*)material;
 
-	vec3 temp0 = vec3_random_unit_vector();
+	const vec3 temp0 = vec3_random_unit_vector();
 	vec3 scatter_direction = vec3_add(&rec->normal, &temp0);
 
 	if (vec3_near_zero(&scatter_direction))
 		scatter_direction = rec->normal;
 
-	ray temp1 = { rec->p, scatter_direction };
+	const ray temp1 = { rec->p, scatter_direction };
 	*scattered = temp1;
 	*attenuation = plambertian->albedo;
 
 	return true;
 }
 
-void lambertian_delete(material* material) {
+void lambertian_delete(const material* material) {
 	if (material == NULL) fprintf(stderr, "Material is NULL: %p\n", material);
 	if (material->type != MATERIAL_TYPE_LAMBERTIAN) fprintf(stderr, "Material is not lambertian but %d\n", material->type);
 

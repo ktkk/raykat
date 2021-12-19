@@ -10,8 +10,8 @@ typedef enum {
 	MATERIAL_TYPE_DIELECTRIC,
 } material_type;
 
-typedef bool (*material_scatter_fn)(material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
-typedef void (*material_delete_fn)(material* material);
+typedef bool (*material_scatter_fn)(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
+typedef void (*material_delete_fn)(const material* material);
 
 struct material_s {
 	material_type type;
@@ -20,6 +20,6 @@ struct material_s {
 	material_delete_fn delete;
 };
 
-void material_init(material* material, material_type type, material_scatter_fn scatter_fn, material_delete_fn delete_fn);
+void material_init(material* material, const material_type type, material_scatter_fn scatter_fn, material_delete_fn delete_fn);
 
 #endif //MATERIAL_SHARED_H
