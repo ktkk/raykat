@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 
-#include "color.h"
 #include "camera.h"
 #include "scene.h"
 #include "material.h"
@@ -22,40 +22,8 @@
 #define GREEN "\e[0;32m"
 #define RESETCOL "\e[0m"
 
-color3 ray_color(const ray* r, const hittable_list* world, const int depth) {
-	hit_record rec;
-
-	const color3 black = {{ 0, 0, 0 }};
-	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
-
-	/* Color is determined by either the ray bouncing between surfaces endlessly until the recursion guard is hit,
-	 * creating shadow, or it hitting the background. */
-
-	/* If object is hit */
-	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
-		ray scattered = { .origin = {{ 0, 0, 0 }}, .direction = {{ 0, 0, 0 }} };
-		color3 attenuation = {{ 0, 0, 0 }};
-
-		if (material_scatter(rec.mat_ptr, r, &rec, &attenuation, &scattered)) {
-			color3 temp0 = ray_color(&scattered, world, depth - 1);
-
-			return vec3_multiply_vectors(&attenuation, &temp0);
-		}
-
-		return black;
-	}
-
-	/* Background lerp */
-	const vec3 unit_direction = vec3_norm(&r->direction);
-	const double hit = 0.5 * (unit_direction.y + 1.0);
-
-	const color3 temp0 = {{ 1.0, 1.0, 1.0 }};
-	const color3 temp1 = {{ 0.5, 0.7, 1.0 }};
-	const color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
-	const color3 prod1 = vec3_multiply_double(&temp1, hit);
-	/* blendedValue = (1 - hit) * startValue + hit * endValue */
-	return vec3_add(&prod0, &prod1);
-}
+static color3 ray_color(const ray* r, const hittable_list* world, const int depth);
+static inline void write_color(FILE* stream, const color3* color, const unsigned int samples_per_pixel);
 
 int main() {
 	/* WORLD */
@@ -102,4 +70,55 @@ int main() {
 	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %d seconds and %d milliseconds.\n", msec / 1000, msec % 1000);
 
 	cleanup_scene(world);
+}
+
+static inline void write_color(FILE* stream, const color3* color, const unsigned int samples_per_pixel) {
+	const double scale = 1.0 / samples_per_pixel;
+	const double r = sqrt(scale * color->r);
+	const double g = sqrt(scale * color->g);
+	const double b = sqrt(scale * color->b);
+
+#define CONVERT_COMPONENT(name) (int)(255.999 * name)
+
+	/* Write out the translated [0, 255] value of each color component */
+	fprintf(stream, "%d %d %d\n",
+			CONVERT_COMPONENT(clamp(r, 0.0, 0.999)),
+			CONVERT_COMPONENT(clamp(g, 0.0, 0.999)),
+			CONVERT_COMPONENT(clamp(b, 0.0, 0.999))
+		);
+}
+
+static color3 ray_color(const ray* r, const hittable_list* world, const int depth) {
+	hit_record rec;
+
+	const color3 black = {{ 0, 0, 0 }};
+	if (depth <= 0) return black; // Recursion guard: return black if we've exceeded the bounce limit
+
+	/* Color is determined by either the ray bouncing between surfaces endlessly until the recursion guard is hit,
+	 * creating shadow, or it hitting the background. */
+
+	/* If object is hit */
+	if (hittable_list_hit(world, r, 0.001, INFINITY, &rec)) {
+		ray scattered = { .origin = {{ 0, 0, 0 }}, .direction = {{ 0, 0, 0 }} };
+		color3 attenuation = {{ 0, 0, 0 }};
+
+		if (material_scatter(rec.mat_ptr, r, &rec, &attenuation, &scattered)) {
+			color3 temp0 = ray_color(&scattered, world, depth - 1);
+
+			return vec3_multiply_vectors(&attenuation, &temp0);
+		}
+
+		return black;
+	}
+
+	/* Background lerp */
+	const vec3 unit_direction = vec3_norm(&r->direction);
+	const double hit = 0.5 * (unit_direction.y + 1.0);
+
+	const color3 temp0 = {{ 1.0, 1.0, 1.0 }};
+	const color3 temp1 = {{ 0.5, 0.7, 1.0 }};
+	const color3 prod0 = vec3_multiply_double(&temp0, 1.0 - hit);
+	const color3 prod1 = vec3_multiply_double(&temp1, hit);
+	/* blendedValue = (1 - hit) * startValue + hit * endValue */
+	return vec3_add(&prod0, &prod1);
 }
