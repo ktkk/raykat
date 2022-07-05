@@ -3,3 +3,6 @@ test/*
 
 output.log
 callgrind.*
+.cache
+
+image.ppm
