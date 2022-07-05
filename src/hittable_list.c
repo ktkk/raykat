@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "hittable_list.h"
 
-hittable_list* hittable_list_init(const int capacity) {
+hittable_list* hittable_list_init(const usize capacity) {
 	hittable_list* list = (hittable_list*)calloc(1, sizeof(*list));
 	if (list == NULL) fprintf(stderr, "Calloc failed: %p\n", list);
 
@@ -18,7 +19,7 @@ hittable_list* hittable_list_init(const int capacity) {
 void hittable_list_cleanup(hittable_list* list) {
 	if (list == NULL) fprintf(stderr, "List is NULL: %p\n", list);
 
-	for (int i = 0; i < list->size; ++i) {
+	for (usize i = 0; i < list->size; ++i) {
 		hittable_delete(list->data[i]);
 	}
 
@@ -45,14 +46,14 @@ void hittable_list_add(hittable_list* list, hittable* object) {
 	list->data[list->size++] = object;
 }
 
-bool hittable_list_hit(const hittable_list* list, const ray* r, const double t_min, const double t_max, hit_record* rec) {
+bool hittable_list_hit(const hittable_list* list, const ray* r, const f64 t_min, const f64 t_max, hit_record* rec) {
 	if (list == NULL) fprintf(stderr, "List is NULL: %p\n", list);
 
 	hit_record temp_rec;
 	bool hit_anything = false;
-	double closest_so_far = t_max;
+	f64 closest_so_far = t_max;
 
-	for (int i = 0; i < list->size; ++i) {
+	for (usize i = 0; i < list->size; ++i) {
 		if (hittable_hit(list->data[i], r, t_min, closest_so_far, &temp_rec)) {
 			hit_anything = true;
 			closest_so_far = temp_rec.t;

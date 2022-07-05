@@ -4,16 +4,22 @@
 
 #include "sphere.h"
 
-static bool sphere_hit_test(const point3* center, const double radius, material* mat_ptr, const ray* r, const double t_min, const double t_max, hit_record* rec);
+static bool sphere_hit_test(const point3* center,
+		const f64 radius,
+		material* mat_ptr,
+		const ray* r,
+		const f64 t_min,
+		const f64 t_max,
+		hit_record* rec);
 
-sphere sphere_init(const point3* center, const double radius, material* material) {
+sphere sphere_init(const point3* center, const f64 radius, material* material) {
 	sphere sphere = { .center = *center, .radius = radius, .mat_ptr = material };
 	hittable_init(&sphere.base, HITTABLE_TYPE_SPHERE, sphere_hit, sphere_delete);
 
 	return sphere;
 }
 
-hittable* sphere_new(const point3* center, const double radius, material* material) {
+hittable* sphere_new(const point3* center, const f64 radius, material* material) {
 	sphere* psphere = (sphere*)calloc(1, sizeof(*psphere));
 	if (psphere == NULL) fprintf(stderr, "Calloc failed: %p\n", psphere);
 
@@ -21,7 +27,11 @@ hittable* sphere_new(const point3* center, const double radius, material* materi
 	return (hittable*)psphere;
 }
 
-bool sphere_hit(const hittable* hittable, const ray* r, const double t_min, const double t_max, hit_record* rec) {
+bool sphere_hit(const hittable* hittable,
+		const ray* r,
+		const f64 t_min,
+		const f64 t_max,
+		hit_record* rec) {
 	if (hittable == NULL) fprintf(stderr, "Hittable is NULL: %p\n", hittable);
 	if (hittable->type != HITTABLE_TYPE_SPHERE) fprintf(stderr, "Hittable is not sphere but %d\n", hittable->type);
 
@@ -40,18 +50,24 @@ void sphere_delete(const hittable* hittable) {
 	free(psphere);
 }
 
-bool sphere_hit_test(const point3* center, const double radius, material* mat_ptr, const ray* r, const double t_min, const double t_max, hit_record* rec) {
+bool sphere_hit_test(const point3* center,
+		const f64 radius,
+		material* mat_ptr,
+		const ray* r,
+		const f64 t_min,
+		const f64 t_max,
+		hit_record* rec) {
 	const vec3 oc = vec3_sub(&r->origin, center);
-	const double a = vec3_length_squared(&r->direction);
-	const double half_b = vec3_dotprod(&oc, &r->direction);
-	const double c = vec3_length_squared(&oc) - radius * radius;
-	const double discriminant = half_b * half_b - a * c;
+	const f64 a = vec3_length_squared(&r->direction);
+	const f64 half_b = vec3_dotprod(&oc, &r->direction);
+	const f64 c = vec3_length_squared(&oc) - radius * radius;
+	const f64 discriminant = half_b * half_b - a * c;
 
 	if (discriminant < 0) return false;
-	const double sqrtd = sqrt(discriminant);
+	const f64 sqrtd = sqrt(discriminant);
 
 	/* Find the nearest root that lies in the acceptable range */
-	double root = (-half_b - sqrtd) / a;
+	f64 root = (-half_b - sqrtd) / a;
 	if (root < t_min || root > t_max) {
 		root = (-half_b + sqrtd) / a;
 		if (root < t_min || root > t_max) return false;

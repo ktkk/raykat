@@ -12,7 +12,7 @@
 
 static bool dielectric_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 
-material* dielectric_new(const double index_of_refraction) {
+material* dielectric_new(const f64 index_of_refraction) {
 	dielectric* pdielectric = (dielectric*)calloc(1, sizeof(*pdielectric));
 	if (pdielectric == NULL) fprintf(stderr, "Calloc failed: %p\n", pdielectric);
 
@@ -22,9 +22,9 @@ material* dielectric_new(const double index_of_refraction) {
 	return (material*)pdielectric;
 }
 
-static double reflectance(const double cosine, const double ref_idx) {
+static f64 reflectance(const f64 cosine, const f64 ref_idx) {
 	/* Use Schlick's approximation for reflectance */
-	double r0 = (1 - ref_idx) / (1 + ref_idx);
+	f64 r0 = (1 - ref_idx) / (1 + ref_idx);
 	r0 = r0 * r0;
 
 	return r0 + (1 - r0) * pow((1 - cosine), 5);
@@ -38,13 +38,13 @@ bool dielectric_scatter(const material* material, const ray* r_in, const hit_rec
 
 	const color3 white = {{ 1.0, 1.0, 1.0 }};
 	*attenuation = white;
-	const double refraction_ratio = rec->front_face ? (1.0 / pdielectric->ir) : pdielectric->ir;
+	const f64 refraction_ratio = rec->front_face ? (1.0 / pdielectric->ir) : pdielectric->ir;
 
 	const vec3 unit_direction = vec3_norm(&r_in->direction);
 
 	const vec3 temp0 = vec3_invert(&unit_direction);
-	const double cos_theta = fmin(vec3_dotprod(&temp0, &rec->normal), 1.0);
-	const double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+	const f64 cos_theta = fmin(vec3_dotprod(&temp0, &rec->normal), 1.0);
+	const f64 sin_theta = sqrt(1.0 - cos_theta * cos_theta);
 
 	const bool cannot_refract = refraction_ratio * sin_theta > 1.0;
 	vec3 direction;

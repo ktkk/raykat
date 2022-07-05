@@ -1,6 +1,8 @@
 #ifndef OBJLOADER_H
 #define OBJLOADER_H
 
+#include "raykat.h"
+
 #include "vec3.h"
 
 /*
@@ -18,7 +20,7 @@ typedef struct {
 	point3 p2;
 } obj_triangle;
 
-obj_triangle* objloader_get_tris(const char* filename, int* size);
+obj_triangle* objloader_get_tris(const char* filename, usize* size);
 void objloader_cleanup();
 
 #endif //OBJLOADER_H

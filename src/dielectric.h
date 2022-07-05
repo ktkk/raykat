@@ -7,10 +7,10 @@
 typedef struct {
 	material base;
 
-	double ir;
+	f64 ir;
 } dielectric;
 
-material* dielectric_new(const double index_of_refraction);
+material* dielectric_new(const f64 index_of_refraction);
 void dielectric_delete(const material* material);
 
 #endif //DIELECTRIC_H

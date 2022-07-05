@@ -11,7 +11,11 @@ typedef enum {
 	HITTABLE_TYPE_TRIANGLE,
 } hittable_type;
 
-typedef bool (*hittable_hit_fn)(const hittable* hittable, const ray* r, const double t_min, const double t_max, hit_record* rec);
+typedef bool (*hittable_hit_fn)(const hittable* hittable,
+		const ray* r,
+		const f64 t_min,
+		const f64 t_max,
+		hit_record* rec);
 typedef void (*hittable_delete_fn)(const hittable* hittable);
 
 struct hittable_s {

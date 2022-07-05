@@ -1,7 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <stdbool.h>
+#include "raykat.h"
 
 #include "vec3.h"
 #include "ray.h"

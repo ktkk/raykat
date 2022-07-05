@@ -17,7 +17,7 @@ static bool check_obj(const char* filename) {
 	return false;
 }
 
-obj_triangle* objloader_get_tris(const char* filename, int* size) {
+obj_triangle* objloader_get_tris(const char* filename, usize* size) {
 	if (!check_obj(filename)) {
 		fprintf(stderr, "File \'%s\' is not an obj.\n", filename);
 		return NULL;
@@ -32,8 +32,8 @@ obj_triangle* objloader_get_tris(const char* filename, int* size) {
 
 	char line_buf[LINE_LEN];
 
-	int npoints = 0;
-	int ntriangles = 0;
+	usize npoints = 0;
+	usize ntriangles = 0;
 	/* Get nr of points and tris */
 	while (fgets(line_buf, LINE_LEN, fp)) {
 		if (line_buf[0] == 'v' && line_buf[1] == ' ')
@@ -47,10 +47,10 @@ obj_triangle* objloader_get_tris(const char* filename, int* size) {
 	point3* pointarr = (point3*)calloc(npoints, sizeof(*pointarr));
 	obj_triangle* trianglearr = (obj_triangle*)calloc(ntriangles, sizeof(*trianglearr));
 
-	int idx = 0;
+	usize idx = 0;
 	rewind(fp);
 	while (fgets(line_buf, LINE_LEN, fp) && idx < npoints) {
-		double x, y, z;
+		f64 x, y, z;
 		if (sscanf(line_buf, "v %lf %lf %lf\n", &x, &y, &z)) {
 			point3 p = {{ x, y, z }};
 			pointarr[idx++] = p;
@@ -60,7 +60,7 @@ obj_triangle* objloader_get_tris(const char* filename, int* size) {
 	idx = 0;
 	rewind(fp);
 	while (fgets(line_buf, LINE_LEN, fp)) {
-		int p0, p1, p2;
+		i32 p0, p1, p2;
 		if (sscanf(line_buf, "f %d %d %d", &p0, &p1, &p2)) {
 			obj_triangle triangle = { pointarr[p0 - 1], pointarr[p1 - 1], pointarr[p2 - 1] };
 			trianglearr[idx++] = triangle;

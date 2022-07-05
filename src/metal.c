@@ -8,7 +8,7 @@
 
 static bool metal_scatter(const material* material, const ray* r_in, const hit_record* rec, color3* attenuation, ray* scattered);
 
-material* metal_new(const color3* albedo, const double fuzz) {
+material* metal_new(const color3* albedo, const f64 fuzz) {
 	metal* pmetal = (metal*)calloc(1, sizeof(*pmetal));
 	if (pmetal == NULL) fprintf(stderr, "Calloc failed: %p\n", pmetal);
 

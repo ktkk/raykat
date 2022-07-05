@@ -1,20 +1,23 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+#include "types.h"
+
 #define VEC3_SIZE 3
 
 typedef	union {
-	double v[VEC3_SIZE];
+	f64 v[VEC3_SIZE];
 
 	struct {
-		double x;
-		double y;
-		double z;
+		f64 x;
+		f64 y;
+		f64 z;
 	};
+
 	struct {
-		double r;
-		double g;
-		double b;
+		f64 r;
+		f64 g;
+		f64 b;
 	};
 } vec3;
 
@@ -26,8 +29,6 @@ typedef	union {
 typedef vec3 point3;
 typedef vec3 color3;
 
-#include <math.h>
-#include <stdbool.h>
 #include "raykat.h"
 
 /* vec3 operations */
@@ -51,16 +52,16 @@ VEC3DEF vec3 vec3_multiply_vectors(const vec3* v0, const vec3* v1) {
 	return prod;
 }
 
-VEC3DEF vec3 vec3_multiply_double(const vec3* v, double t) {
+VEC3DEF vec3 vec3_multiply_double(const vec3* v, f64 t) {
 	vec3 prod = {{ t * v->v[0], t * v->v[1], t * v->v[2] }};
 	return prod;
 }
 
-VEC3DEF vec3 vec3_divide(const vec3* v, double t) {
+VEC3DEF vec3 vec3_divide(const vec3* v, f64 t) {
 	return vec3_multiply_double(v, (1/t));
 }
 
-VEC3DEF double vec3_dotprod(const vec3* v0, const vec3* v1) {
+VEC3DEF f64 vec3_dotprod(const vec3* v0, const vec3* v1) {
 	return v0->v[0] * v1->v[0]
 	     + v0->v[1] * v1->v[1]
 	     + v0->v[2] * v1->v[2];
@@ -75,12 +76,12 @@ VEC3DEF vec3 vec3_crossprod(const vec3* v0, const vec3* v1) {
 	return cross;
 }
 
-VEC3DEF double vec3_length_squared(const vec3* v) {
+VEC3DEF f64 vec3_length_squared(const vec3* v) {
 	/* Pythagoras' theorem */
 	return v->v[0] * v->v[0] + v->v[1] * v->v[1] + v->v[2] * v->v[2];
 }
 
-VEC3DEF double vec3_length(const vec3* v) {
+VEC3DEF f64 vec3_length(const vec3* v) {
 	return sqrt(vec3_length_squared(v));
 }
 
@@ -93,10 +94,10 @@ VEC3DEF vec3 vec3_reflect(const vec3* v, const vec3* n) {
 	return vec3_sub(v, &temp);
 }
 
-VEC3DEF vec3 vec3_refract(const vec3* uv, const vec3* n, double etai_over_etat) {
+VEC3DEF vec3 vec3_refract(const vec3* uv, const vec3* n, f64 etai_over_etat) {
 	vec3 temp0 = vec3_invert(uv);
-	double temp1 = vec3_dotprod(&temp0, n);
-	double cos_theta = fmin(temp1, 1.0);
+	f64 temp1 = vec3_dotprod(&temp0, n);
+	f64 cos_theta = fmin(temp1, 1.0);
 
 	vec3 temp2 = vec3_multiply_double(n, cos_theta);
 	vec3 temp3 = vec3_add(uv, &temp2);
@@ -112,7 +113,7 @@ VEC3DEF vec3 vec3_random() {
 	return temp;
 }
 
-VEC3DEF vec3 vec3_random_range(double min, double max) {
+VEC3DEF vec3 vec3_random_range(f64 min, f64 max) {
 	vec3 temp = {{ RAND_DOUBLE_RANGE(min, max), RAND_DOUBLE_RANGE(min, max), RAND_DOUBLE_RANGE(min, max) }};
 	return temp;
 }
@@ -151,7 +152,7 @@ VEC3DEF vec3 vec3_random_in_unit_disk() {
 }
 
 VEC3DEF bool vec3_near_zero(const vec3* v) {
-	const double s = 1e-8;
+	const f64 s = 1e-8;
 	return (fabs(v->v[0]) < s) && (fabs(v->v[1]) < s) && (fabs(v->v[2]) < s);
 }
 

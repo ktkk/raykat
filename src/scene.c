@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "scene.h"
 
 #include "raykat.h"
@@ -127,11 +128,11 @@ hittable_list* create_tris_scene() {
 hittable_list* create_obj_scene() {
 	hittable_list* scene = hittable_list_init(500);
 
-	int ntris = 0;
+	usize ntris = 0;
 	obj_triangle* triangles = objloader_get_tris("test/monkey.obj", &ntris);
 
 	const color3 obj_color = {{ 0.8, 0.2, 0.0 }};
-	for (int i = 0; i < ntris; ++i) {
+	for (usize i = 0; i < ntris; ++i) {
 		material* material_tri = lambertian_new(&obj_color);
 		hittable_list_add(scene, triangle_new(&triangles[i].p0, &triangles[i].p1, &triangles[i].p2, material_tri));
 	}
@@ -161,9 +162,9 @@ hittable_list* create_random_scene() {
 	const point3 ground_center = {{ 0, -1000, 0 }};
 	hittable_list_add(scene, sphere_new(&ground_center, 1000, material_ground));
 
-	for (int a = -11; a < 11; ++a) {
-		for (int b = -11; b < 11; ++b) {
-			const double choose_mat = RAND_DOUBLE;
+	for (u8 a = -11; a < 11; ++a) {
+		for (u8 b = -11; b < 11; ++b) {
+			const f64 choose_mat = RAND_DOUBLE;
 			const point3 center = {{ a + 0.9 * RAND_DOUBLE, 0.2, b + 0.9 * RAND_DOUBLE }};
 
 			const point3 temp0 = {{ 4, 0.2, 0 }};
@@ -183,7 +184,7 @@ hittable_list* create_random_scene() {
 				else if (choose_mat < 0.95) {
 					/* Metal */
 					const color3 albedo = vec3_random_range(0.5, 1);
-					double fuzz = RAND_DOUBLE_RANGE(0, 0.5);
+					f64 fuzz = RAND_DOUBLE_RANGE(0, 0.5);
 
 					sphere_material = metal_new(&albedo, fuzz);
 					hittable_list_add(scene, sphere_new(&center, SMALL_RADIUS, sphere_material));

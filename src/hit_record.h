@@ -1,7 +1,7 @@
 #ifndef HIT_RECORD_H
 #define HIT_RECORD_H
 
-#include <stdbool.h>
+#include "raykat.h"
 
 #include "vec3.h"
 #include "ray.h"
@@ -10,7 +10,7 @@ typedef struct {
 	point3 p;
 	vec3 normal;
 	void* mat_ptr;
-	double t;
+	f64 t;
 
 	bool front_face;
 } hit_record;

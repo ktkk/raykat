@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <time.h>
-#include <math.h>
 
 #include "camera.h"
 #include "scene.h"
@@ -22,8 +21,8 @@
 #define GREEN "\e[0;32m"
 #define RESETCOL "\e[0m"
 
-static color3 ray_color(const ray* r, const hittable_list* world, const int depth);
-static inline void write_color(FILE* stream, const color3* color, const unsigned int samples_per_pixel);
+static color3 ray_color(const ray* r, const hittable_list* world, const u8 depth);
+static inline void write_color(FILE* stream, const color3* color, const u16 samples_per_pixel);
 
 int main() {
 	/* WORLD */
@@ -33,8 +32,8 @@ int main() {
 	const point3 lookfrom = {{ 13, 2, 3 }};
 	const point3 lookat = {{ 0, 0, 0 }};
 	const vec3 vup = {{ 0, 1, 0 }};
-	const double aperture = 0.1;
-	const double dist_to_focus = 10.0;
+	const f64 aperture = 0.1;
+	const f64 dist_to_focus = 10.0;
 	const camera cam = camera_init(&lookfrom, &lookat, &vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* RENDER */
@@ -44,16 +43,16 @@ int main() {
 							      P3 means colors are in ascii
 							      followed by width and height */
 
-	for (int i = IMG_HEIGHT - 1; i >= 0; --i) {
+	for (u32 i = IMG_HEIGHT - 1; i >= 0; --i) {
 		fprintf(stderr, YELLOW "\rScanlines remaining: " RED "%3d" RESETCOL, i);
 		fflush(stderr);
 
-		for (int j = 0; j < IMG_WIDTH; ++j) {
+		for (u32 j = 0; j < IMG_WIDTH; ++j) {
 			color3 pixel_color = {{ 0, 0, 0 }};
 
-			for (int s = 0; s < SAMPLES_PER_PIXEL; ++s) {
-				const double u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
-				const double v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
+			for (u16 s = 0; s < SAMPLES_PER_PIXEL; ++s) {
+				const f64 u = (j + RAND_DOUBLE) / (IMG_WIDTH - 1);
+				const f64 v = (i + RAND_DOUBLE) / (IMG_HEIGHT - 1);
 
 				const ray r = camera_get_ray(&cam, u, v);
 				color3 raycolor = ray_color(&r, world, MAX_DEPTH);
@@ -65,20 +64,20 @@ int main() {
 	}
 
 	const clock_t diff = clock() - start;
-	const int msec = diff * 1000 / CLOCKS_PER_SEC;
+	const usize msec = diff * 1000 / CLOCKS_PER_SEC;
 
-	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %d seconds and %d milliseconds.\n", msec / 1000, msec % 1000);
+	fprintf(stderr, GREEN "\nDone.\n" RESETCOL "Took %lu seconds and %ul milliseconds.\n", msec / 1000, msec % 1000);
 
 	cleanup_scene(world);
 }
 
-static inline void write_color(FILE* stream, const color3* color, const unsigned int samples_per_pixel) {
-	const double scale = 1.0 / samples_per_pixel;
-	const double r = sqrt(scale * color->r);
-	const double g = sqrt(scale * color->g);
-	const double b = sqrt(scale * color->b);
+static inline void write_color(FILE* stream, const color3* color, const u16 samples_per_pixel) {
+	const f64 scale = 1.0 / samples_per_pixel;
+	const f64 r = sqrt(scale * color->r);
+	const f64 g = sqrt(scale * color->g);
+	const f64 b = sqrt(scale * color->b);
 
-#define CONVERT_COMPONENT(name) (int)(255.999 * name)
+#define CONVERT_COMPONENT(name) (u32)(255.999 * name)
 
 	/* Write out the translated [0, 255] value of each color component */
 	fprintf(stream, "%d %d %d\n",
@@ -88,7 +87,7 @@ static inline void write_color(FILE* stream, const color3* color, const unsigned
 		);
 }
 
-static color3 ray_color(const ray* r, const hittable_list* world, const int depth) {
+static color3 ray_color(const ray* r, const hittable_list* world, const u8 depth) {
 	hit_record rec;
 
 	const color3 black = {{ 0, 0, 0 }};
@@ -113,7 +112,7 @@ static color3 ray_color(const ray* r, const hittable_list* world, const int dept
 
 	/* Background lerp */
 	const vec3 unit_direction = vec3_norm(&r->direction);
-	const double hit = 0.5 * (unit_direction.y + 1.0);
+	const f64 hit = 0.5 * (unit_direction.y + 1.0);
 
 	const color3 temp0 = {{ 1.0, 1.0, 1.0 }};
 	const color3 temp1 = {{ 0.5, 0.7, 1.0 }};

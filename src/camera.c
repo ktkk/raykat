@@ -4,11 +4,17 @@
 
 #define FOCAL_LENGTH 1.0
 
-camera camera_init(const point3* lookfrom, const point3* lookat, const vec3* vup, const double vfov, const double aspect_ratio, const double aperture, const double focus_dist) {
-	const double theta = DEG_TO_RAD(vfov);
-	const double h = tan(theta / 2);
-	const double viewport_height = 2.0 * h;
-	const double viewport_width = aspect_ratio * viewport_height;
+camera camera_init(const point3* lookfrom,
+		const point3* lookat,
+		const vec3* vup,
+		const f64 vfov,
+		const f64 aspect_ratio,
+		const f64 aperture,
+		const f64 focus_dist) {
+	const f64 theta = DEG_TO_RAD(vfov);
+	const f64 h = tan(theta / 2);
+	const f64 viewport_height = 2.0 * h;
+	const f64 viewport_width = aspect_ratio * viewport_height;
 
 	const vec3 temp0 = vec3_sub(lookfrom, lookat);
 	const vec3 w = vec3_norm(&temp0);
@@ -27,7 +33,7 @@ camera camera_init(const point3* lookfrom, const point3* lookat, const vec3* vup
 	const point3 temp4 = vec3_multiply_double(&w, focus_dist);
 	const point3 lower_left_corner = vec3_sub(&temp3, &temp4);
 
-	const double lens_radius = aperture / 2;
+	const f64 lens_radius = aperture / 2;
 
 	const camera camera = {
 		.origin = origin,
@@ -43,7 +49,7 @@ camera camera_init(const point3* lookfrom, const point3* lookat, const vec3* vup
 	return camera;
 }
 
-ray camera_get_ray(const camera* cam, const double s, const double t) {
+ray camera_get_ray(const camera* cam, const f64 s, const f64 t) {
 	const vec3 temp0 = vec3_random_in_unit_disk();
 	const vec3 rd = vec3_multiply_double(&temp0, cam->lens_radius);
 

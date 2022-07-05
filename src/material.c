@@ -1,4 +1,5 @@
 #include <stddef.h>
+
 #include "material.h"
 #include "material_shared.h"
 
