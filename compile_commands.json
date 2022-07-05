@@ -1,0 +1,226 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/camera.o",
+      "src/camera.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/camera.c",
+    "output": "/home/katkak/Projects/raykat/build/camera.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/dielectric.o",
+      "src/dielectric.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/dielectric.c",
+    "output": "/home/katkak/Projects/raykat/build/dielectric.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/hit_record.o",
+      "src/hit_record.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/hit_record.c",
+    "output": "/home/katkak/Projects/raykat/build/hit_record.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/hittable.o",
+      "src/hittable.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/hittable.c",
+    "output": "/home/katkak/Projects/raykat/build/hittable.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/hittable_list.o",
+      "src/hittable_list.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/hittable_list.c",
+    "output": "/home/katkak/Projects/raykat/build/hittable_list.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/lambertian.o",
+      "src/lambertian.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/lambertian.c",
+    "output": "/home/katkak/Projects/raykat/build/lambertian.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/material.o",
+      "src/material.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/material.c",
+    "output": "/home/katkak/Projects/raykat/build/material.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/metal.o",
+      "src/metal.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/metal.c",
+    "output": "/home/katkak/Projects/raykat/build/metal.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/objloader.o",
+      "src/objloader.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/objloader.c",
+    "output": "/home/katkak/Projects/raykat/build/objloader.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/ray.o",
+      "src/ray.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/ray.c",
+    "output": "/home/katkak/Projects/raykat/build/ray.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/raykat.o",
+      "src/raykat.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/raykat.c",
+    "output": "/home/katkak/Projects/raykat/build/raykat.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/scene.o",
+      "src/scene.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/scene.c",
+    "output": "/home/katkak/Projects/raykat/build/scene.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/sphere.o",
+      "src/sphere.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/sphere.c",
+    "output": "/home/katkak/Projects/raykat/build/sphere.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-std=c11",
+      "-O3",
+      "-c",
+      "-o",
+      "build/triangle.o",
+      "src/triangle.c"
+    ],
+    "directory": "/home/katkak/Projects/raykat",
+    "file": "/home/katkak/Projects/raykat/src/triangle.c",
+    "output": "/home/katkak/Projects/raykat/build/triangle.o"
+  }
+]
